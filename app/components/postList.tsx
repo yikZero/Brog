@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { SanityDocument } from "next-sanity";
 
 interface PostListProps {
   title: string;
