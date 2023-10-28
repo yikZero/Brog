@@ -6,9 +6,15 @@ export const menusQuery = groq`*[_type == "menu" && defined(slug.current)] | ord
 }`;
 
 // Get all posts
-export const postsQuery = groq`*[_type == "post" && defined(slug.current)] | order(publishedAt desc) {
-  _id, title, description, publishedAt, slug
-}`;
+export function createPostsQuery(limit?: number) {
+  const slicePart = limit ? ` [0..${limit - 1}]` : "";
+  return groq`*[_type == "post" && defined(slug.current)] | order(publishedAt desc)${slicePart} {
+    _id, title, description, publishedAt, slug
+  }`;
+}
+
+// Get posts count
+export const postNumberQuery = groq`count(*[_type == "post" && defined(slug.current)])`;
 
 // Get a single post by its slug
 export const postQuery = groq`*[_type == "post" && slug.current == $slug][0]{ 
@@ -21,6 +27,12 @@ export const postPathsQuery = groq`*[_type == "post" && defined(slug.current)][]
 }`;
 
 // Get all projects
-export const projectsQuery = groq`*[_type == "project" && defined(url)] | order(publishedAt desc) {
-  _id, title, description, url, publishedAt
-}`;
+export function createProjectsQuery(limit?: number) {
+  const slicePart = limit ? ` [0..${limit - 1}]` : "";
+  return groq`*[_type == "project" && defined(url)] | order(publishedAt desc)${slicePart} {
+    _id, title, description, url, publishedAt
+  }`;
+}
+
+// Get projects count
+export const projectNumberQuery = groq`count(*[_type == "project" && defined(url)])`;

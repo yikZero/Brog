@@ -2,7 +2,7 @@ import Profile from "../components/Profile";
 import BrogConfig from "../../brog.config";
 import Posts from "../components/Posts";
 import type { Metadata } from "next";
-import { postsQuery, projectsQuery } from "@/sanity/lib/queries";
+import { createPostsQuery, postNumberQuery, createProjectsQuery, projectNumberQuery } from "@/sanity/lib/queries";
 import { SanityDocument } from "next-sanity";
 import { sanityFetch } from "@/sanity/lib/sanityFetch";
 import Title from "../components/Title";
@@ -14,8 +14,14 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   
-  const posts = await sanityFetch<SanityDocument[]>({ query: postsQuery });
-  const projects = await sanityFetch<SanityDocument[]>({ query: projectsQuery });
+  const postsLimit = Number(BrogConfig.HOMEPAGE_POST_NUMBER);
+  const projectsLimit = Number(BrogConfig.HOMEPAGE_PROJECT_NUMBER);
+
+  const posts = await sanityFetch<SanityDocument[]>({ query: createPostsQuery(postsLimit) });
+  const projects = await sanityFetch<SanityDocument[]>({ query: createProjectsQuery(projectsLimit) });
+
+  const postsNumber = await sanityFetch<number>({ query: postNumberQuery });
+  const projectsNumber = await sanityFetch<number>({ query: projectNumberQuery });
 
   return (
     <>
@@ -24,17 +30,15 @@ export default async function Home() {
         <Title
           title="文章"
           href="/posts"
-          showMore={posts.length > Number(BrogConfig.HOMEPAGE_POST_NUMBER)}
+          showMore={postsNumber > postsLimit}
         />
         <Posts posts={posts} />
       </section>
-      <section className="HomepagePosts">
+      <section className="HomepageProjects">
         <Title
           title="项目"
           href="/projects"
-          showMore={
-            projects.length > Number(BrogConfig.HOMEPAGE_PROJECT_NUMBER)
-          }
+          showMore={projectsNumber > projectsLimit}
         />
         <Projects projects={projects} />
       </section>
