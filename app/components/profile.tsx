@@ -1,4 +1,4 @@
-import Title from "./title";
+import Title from "./Title";
 import BrogConfig from "../../brog.config";
 
 export default function Profile() {

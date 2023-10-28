@@ -1,6 +1,6 @@
 import Link from "next/link";
 import BrogConfig from "../../brog.config";
-import { BrogLogo } from "./icons";
+import { BrogLogo } from "./Icons";
 
 export default function Footer() {
   return (

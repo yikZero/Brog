@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LinkIcon } from "./icons";
+import { LinkIcon } from "./Icons";
 import type { SanityDocument } from "next-sanity";
 
 export default function Projects({

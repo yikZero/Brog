@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "../globals.css";
 import BrogConfig from "../../brog.config";
-import Header from "../components/header";
-import Footer from "../components/footer";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
   title: BrogConfig.WEB_TITLE,
