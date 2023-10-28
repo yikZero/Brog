@@ -24,6 +24,10 @@ export default defineType({
       name: 'publishedAt',
       title: 'Published at',
       type: 'date',
+
+      options:{
+        dateFormat: "YYYY-MM",
+      }
     }),
   ],
 

@@ -28,7 +28,7 @@ export default function Projects({
             </div>
           </div>
           <div className="text-gray-600 dark:text-gray-400 font-normal whitespace-nowrap">
-            {project.publishedAt}
+            {project.publishedAt.slice(0, 7)}
           </div>
         </Link>
       ))}

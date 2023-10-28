@@ -1,7 +1,7 @@
 import { groq } from "next-sanity";
 
 // Get all menus
-export const menusQuery = groq`*[_type == "menu" && defined(slug.current)]{
+export const menusQuery = groq`*[_type == "menu" && defined(slug.current)] | order(order) {
   _id, title, description, slug
 }`;
 

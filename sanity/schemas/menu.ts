@@ -20,6 +20,11 @@ export default defineType({
       title: 'Slug',
       type: 'slug',
     }),
+    defineField({
+      name: 'order',
+      title: 'Order',
+      type: 'number',
+    }),
   ],
 
   preview: {
