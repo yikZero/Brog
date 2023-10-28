@@ -1,8 +1,13 @@
 import Link from "next/link";
 import BrogConfig from "../../brog.config";
-import MenuList from "./menuList";
+import Menus from "./Menus";
+import { sanityFetch } from "@/sanity/lib/sanityFetch";
+import { SanityDocument } from "next-sanity";
+import { menusQuery } from "@/sanity/lib/queries";
 
-export default function Header({ menus = [] }: any) {
+export default async function Header() {
+  const menus = await sanityFetch<SanityDocument[]>({ query: menusQuery });
+
   return (
     <>
       <header className="flex flex-row justify-between w-full pt-8 sm:pt-16 items-center">
@@ -13,19 +18,7 @@ export default function Header({ menus = [] }: any) {
           {BrogConfig.BLOG_TITLE}
         </Link>
         <div className="flex flex-row gap-5 text-sm">
-          {menus
-            .sort(
-              (a: any, b: any) =>
-                new Date(b.properties?.date?.date.start).getTime() -
-                new Date(a.properties?.date?.date.start).getTime()
-            )
-            .map((menu:any) => (
-              <MenuList
-                key={menu.id}
-                title={menu.properties?.title?.title[0].text.content}
-                slug={menu.properties?.slug?.rich_text[0].text.content}
-              />
-            ))}
+          <Menus menus={menus} />
         </div>
       </header>
     </>
