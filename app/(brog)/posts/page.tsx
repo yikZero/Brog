@@ -6,7 +6,7 @@ import { SanityDocument } from "next-sanity";
 import { postsQuery } from "@/sanity/lib/queries";
 
 export const metadata: Metadata = {
-  title: `项目列表｜${BrogConfig.WEB_TITLE}`,
+  title: `文章列表｜${BrogConfig.WEB_TITLE}`,
 };
 
 export default async function ProjectPage() {
