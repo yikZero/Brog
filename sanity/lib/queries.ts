@@ -18,7 +18,7 @@ export const postNumberQuery = groq`count(*[_type == "post" && defined(slug.curr
 
 // Get a single post by its slug
 export const postQuery = groq`*[_type == "post" && slug.current == $slug][0]{ 
-  title, body
+  title, publishedAt, body
 }`;
 
 // Get all post slugs

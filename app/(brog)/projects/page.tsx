@@ -21,3 +21,5 @@ export default async function ProjectPage() {
     </>
   );
 }
+
+export const revalidate = 60;

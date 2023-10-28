@@ -1,12 +1,12 @@
-import Profile from "../components/Profile";
 import BrogConfig from "../../brog.config";
+import Profile from "../components/Profile";
+import Title from "../components/Title";
 import Posts from "../components/Posts";
+import Projects from "../components/Projects";
 import type { Metadata } from "next";
 import { createPostsQuery, postNumberQuery, createProjectsQuery, projectNumberQuery } from "@/sanity/lib/queries";
 import { SanityDocument } from "next-sanity";
 import { sanityFetch } from "@/sanity/lib/sanityFetch";
-import Title from "../components/Title";
-import Projects from "../components/Projects";
 
 export const metadata: Metadata = {
   title: `首页｜${BrogConfig.WEB_TITLE}`,
@@ -45,3 +45,5 @@ export default async function Home() {
     </>
   );
 }
+
+export const revalidate = 60;
