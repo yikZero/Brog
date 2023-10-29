@@ -5,8 +5,24 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(BrogConfig.SITE_URL),
   title: BrogConfig.WEB_TITLE,
-  description: "Next.js Blog",
+  description: BrogConfig.WEB_DESCRIPTION,
+  keywords: "yikZero,Zero,Roominess,设计工程师,开发者,设计师,细节控,创新",
+  openGraph: {
+    title: BrogConfig.WEB_TITLE,
+    description: BrogConfig.WEB_DESCRIPTION,
+    siteName: BrogConfig.WEB_TITLE,
+    locale: 'zh_CN',
+    type: 'website',
+    url: BrogConfig.SITE_URL,
+  },
+  alternates: {
+    canonical: BrogConfig.SITE_URL,
+    types: {
+      'application/rss+xml': [{ url: 'rss', title: 'RSS 订阅' }],
+    },
+  },
 };
 
 export default function RootLayout({

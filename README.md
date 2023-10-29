@@ -35,6 +35,7 @@
 | Field Name               | Example Value                                      | Description                            |
 |--------------------------|-----------------------------------------------------|----------------------------------------|
 | WEB_TITLE                | Brog                                              | Website Title                          |
+| WEB_DESCRIPTION          | It's my blog of all...                            | Website description                      |
 | BLOG_TITLE               | Brog                                              | Menu Bar Title                         |
 | AUTHOR                   | yikZero                                           | Author Name                            |
 | OCCUPATION               | Design Engineer                                   | Occupation                             |
