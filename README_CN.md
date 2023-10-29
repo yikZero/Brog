@@ -26,11 +26,12 @@
 
 ## 技术栈
 
-- [React](https://react.dev/)
 - [Next.js](https://nextjs.org/)
+- [React](https://react.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Vercel](https://vercel.com/)
+- [Sanity](https://www.sanity.io/)
 
 ## 部署
 
