@@ -10,12 +10,19 @@
     <img alt="GitHub commit" src="https://img.shields.io/github/license/yikZero/Brog-Sanity"></a>
 </div>
 
+## Preview
+
+<img alt="Brog" src="Brog.png">
+
 ## Features
 
-- 🌓 Dynamic Light and Dark Theme Adaptability
-- 📏 Minimalist and Lightweight Design
+- 🌓 Adaptive Light/Dark Theme
+- 📏 Minimalist Design
 - ⚡ Ultra-Fast Response Time
 - 📡 Customizable RSS Feed Integration
+- 🌐 SEO-Optimized
+- 🗺️ Sitemap Configuration
+- 🔄 ISR Update Support
 
 ## Tech Stack
 

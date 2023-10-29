@@ -10,11 +10,19 @@
     <img alt="GitHub 许可" src="https://img.shields.io/github/license/yikZero/Brog-Sanity"></a>
 </div>
 
+## 预览
+
+<img alt="Brog" src="Brog.png">
+
 ## 功能
 
-- 🌓 动态深浅色主题适应
-- 📏 简约轻量设计
-- ⚡ 极速响应时间
+- 🌓 自适应深浅色主题
+- 📏 简约设计
+- ⚡ 极速响应
+- 📡 可定制 RSS 订阅
+- 🌐 优化搜索引擎
+- 🗺️ 网站地图设置
+- 🔄 ISR 更新支持
 
 ## 技术栈
 
