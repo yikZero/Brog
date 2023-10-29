@@ -1,9 +1,7 @@
-import Projects from "@/app/components/Projects";
+import ProjectItem from "@/app/components/ProjectItem";
+import { getProjects } from "@/sanity/lib/queries";
 import type { Metadata } from "next";
 import BrogConfig from "../../../brog.config";
-import { sanityFetch } from "@/sanity/lib/sanityFetch";
-import { SanityDocument } from "next-sanity";
-import { createProjectsQuery } from "@/sanity/lib/queries";
 
 export const metadata: Metadata = {
   title: `项目列表｜${BrogConfig.WEB_TITLE}`,
@@ -11,12 +9,13 @@ export const metadata: Metadata = {
 
 export default async function ProjectPage() {
 
-  const projects = await sanityFetch<SanityDocument[]>({ query: createProjectsQuery() });
-
+  const projects = await getProjects();
   return (
     <>
       <section className="ProjectsPage">
-        <Projects projects={projects} />
+        {projects.map((project) => (
+            <ProjectItem key={project._id} project={project} />
+          ))}
       </section>
     </>
   );

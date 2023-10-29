@@ -3,7 +3,7 @@ import { md5 } from "js-md5";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function PostAuthor({ publishedAt }: { publishedAt: Date }) {
+export default function PostAuthor({ publishedAt }: { publishedAt: string }) {
 
   const emailHash = md5(BrogConfig.CONTACT_EMAIL);
 

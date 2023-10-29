@@ -1,18 +1,16 @@
-import { SanityDocument } from "next-sanity";
 import BrogConfig from "@/brog.config";
 import Post from "@/app/components/Post";
-import { postPathsQuery, postQuery } from "@/sanity/lib/queries";
-import { sanityFetch } from "@/sanity/lib/sanityFetch";
-import { client } from "@/sanity/lib/client";
+import { getPostPaths, getPost } from "@/sanity/lib/queries";
 
 // Prepare Next.js to know which routes already exist
 export async function generateStaticParams() {
-  const posts = await client.fetch(postPathsQuery);
+  const posts = await getPostPaths();
   return posts;
 }
 
 async function fetchPost(params: any) {
-  return await sanityFetch<SanityDocument>({ query: postQuery, params });
+  const post = await getPost(params.slug);
+  return post;
 }
 
 export async function generateMetadata({ params }: { params: any }) {

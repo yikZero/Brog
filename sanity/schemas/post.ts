@@ -1,55 +1,70 @@
-import {defineField, defineType} from 'sanity'
+import { defineField, defineType } from "sanity";
+import { z } from "zod";
+
+export const Post = z.object({
+  _id: z.string(),
+  title: z.string(),
+  description: z.string(),
+  publishedAt: z.string(),
+  slug: z.object({
+    _type: z.string(),
+    current: z.string(),
+  }),
+  body: z.any(),
+});
+
+export type Post = z.infer<typeof Post>;
 
 export default defineType({
-  name: 'post',
-  title: 'Post',
-  type: 'document',
+  name: "post",
+  title: "Post",
+  type: "document",
   fields: [
     defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
+      name: "title",
+      title: "Title",
+      type: "string",
     }),
     defineField({
-      name: 'description',
-      title: 'Description',
-      type: 'string',
+      name: "description",
+      title: "Description",
+      type: "string",
     }),
     defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
+      name: "slug",
+      title: "Slug",
+      type: "slug",
       options: {
-        source: 'title',
+        source: "title",
         maxLength: 96,
       },
     }),
     defineField({
-      name: 'categories',
-      title: 'Categories',
-      type: 'array',
-      of: [{type: 'reference', to: {type: 'category'}}],
+      name: "categories",
+      title: "Categories",
+      type: "array",
+      of: [{ type: "reference", to: { type: "category" } }],
     }),
     defineField({
-      name: 'publishedAt',
-      title: 'Published at',
-      type: 'date',
+      name: "publishedAt",
+      title: "Published at",
+      type: "date",
     }),
     defineField({
-      name: 'body',
-      title: 'Body',
-      type: 'blockContent',
+      name: "body",
+      title: "Body",
+      type: "blockContent",
     }),
   ],
 
   preview: {
     select: {
-      title: 'title',
-      author: 'author.name',
+      title: "title",
+      author: "author.name",
     },
     prepare(selection) {
-      const {author} = selection
-      return {...selection, subtitle: author && `by ${author}`}
+      const { author } = selection;
+      return { ...selection, subtitle: author && `by ${author}` };
     },
   },
-})
+});

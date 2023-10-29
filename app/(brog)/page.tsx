@@ -1,38 +1,38 @@
 import BrogConfig from "../../brog.config";
 import Profile from "../components/Profile";
 import Title from "../components/Title";
-import Posts from "../components/Posts";
-import Projects from "../components/Projects";
+import PostItem from "../components/PostItem";
+import ProjectItem from "../components/ProjectItem";
 import type { Metadata } from "next";
-import { createPostsQuery, postNumberQuery, createProjectsQuery, projectNumberQuery } from "@/sanity/lib/queries";
-import { SanityDocument } from "next-sanity";
-import { sanityFetch } from "@/sanity/lib/sanityFetch";
+import {
+  getPosts,
+  getProjects,
+  getPostsCount,
+  getProjectsCount,
+} from "@/sanity/lib/queries";
 
 export const metadata: Metadata = {
   title: `首页｜${BrogConfig.WEB_TITLE}`,
 };
 
 export default async function Home() {
-  
   const postsLimit = Number(BrogConfig.HOMEPAGE_POST_NUMBER);
   const projectsLimit = Number(BrogConfig.HOMEPAGE_PROJECT_NUMBER);
 
-  const posts = await sanityFetch<SanityDocument[]>({ query: createPostsQuery(postsLimit) });
-  const projects = await sanityFetch<SanityDocument[]>({ query: createProjectsQuery(projectsLimit) });
+  const posts = await getPosts(postsLimit);
+  const projects = await getProjects(projectsLimit);
 
-  const postsNumber = await sanityFetch<number>({ query: postNumberQuery });
-  const projectsNumber = await sanityFetch<number>({ query: projectNumberQuery });
+  const postsNumber = await getPostsCount();
+  const projectsNumber = await getProjectsCount();
 
   return (
     <>
       <Profile />
       <section className="HomepagePosts">
-        <Title
-          title="文章"
-          href="/posts"
-          showMore={postsNumber > postsLimit}
-        />
-        <Posts posts={posts} />
+        <Title title="文章" href="/posts" showMore={postsNumber > postsLimit} />
+        {posts.map((post) => (
+          <PostItem key={post._id} post={post} />
+        ))}
       </section>
       <section className="HomepageProjects">
         <Title
@@ -40,7 +40,9 @@ export default async function Home() {
           href="/projects"
           showMore={projectsNumber > projectsLimit}
         />
-        <Projects projects={projects} />
+        {projects.map((project) => (
+          <ProjectItem key={project._id} project={project} />
+        ))}
       </section>
     </>
   );

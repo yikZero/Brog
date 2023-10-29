@@ -1,13 +1,16 @@
 import PostAuthor from "./PostAuthor";
-import { SanityDocument } from "next-sanity";
+import { type Post } from "@/sanity/schemas/post";
 import { PortableText } from "@portabletext/react";
 
-export default function Post({ post }: { post: SanityDocument }) {
+export default function PostPage({ post }: { post: Post }) {
+
+  const {title, publishedAt, body } = post
+
   return (
     <main className="container mx-auto prose dark:prose-invert">
-      <h1>{post.title}</h1>
-      <PostAuthor publishedAt={post.publishedAt}/>
-      {post?.body ? <PortableText value={post.body} /> : null}
+      <h1>{title}</h1>
+      <PostAuthor publishedAt={publishedAt}/>
+      {body ? <PortableText value={body} /> : null}
     </main>
   );
 }
