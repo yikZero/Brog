@@ -38,7 +38,7 @@
 | OCCUPATION               | Design Engineer                                   | 职业                                   |
 | BIO                      | 我是一位设计师...                                   | 作者简介                               |
 | CONTACT_EMAIL            | i@yikzero.com                                     | 邮箱地址，可用于Gravatar头像生成       |
-| SITE_URL                 | https://broog.vercel.app                           | 个人网站 用于生成 SiteMap       |
+| SITE_URL                 | https://blog.yikzero.com                           | 个人网站 用于生成 SiteMap       |
 | HOMEPAGE_POST_NUMBER     | 3                                                   | 在首页可显示的文章数量                  |
 | HOMEPAGE_PROJECT_NUMBER  | 3                                                   | 在首页可显示的项目数量                  |
 | SINCE                    | 2023                                                | 如果留空，则使用当前年份               |

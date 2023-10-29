@@ -7,7 +7,7 @@ const BrogConfig = {
   BIO: process.env.NEXT_PUBLIC_BIO || "22 年毕业于工科院校设计专业，目前在小公司当一位 UI 设计师。当时为了实现自己的设计稿而接触了前端，现在就喜欢上了写代码。除此之外，我还喜欢捣鼓各种软件、徒步滑雪，探索这个世界的种种。", // 作者简介 Author Introduction
 
   CONTACT_EMAIL: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'i@yikzero.com',  //邮箱地址 可用于Gravatar头像生成 Email address can be used for generating Gravatar avatars
-  SITE_URL: process.env.SITE_URL || 'https://broog.vercel.app',  // 用于生成 SiteMap Generate SiteMap
+  SITE_URL: process.env.SITE_URL || 'https://blog.yikzero.com',  // 用于生成 SiteMap Generate SiteMap
 
   HOMEPAGE_POST_NUMBER: process.env.NEXT_HOMEPAGE_POST_NUMBER || 3, // 在首页可显示的文章数量 The number of posts that can be displayed on the homepage
   HOMEPAGE_PROJECT_NUMBER: process.env.NEXT_HOMEPAGE_PROJECT_NUMBER || 3, // 在首页可显示的项目数量 The number of projects that can be displayed on the homepage
@@ -16,4 +16,4 @@ const BrogConfig = {
 
 };
 
-module.exports = BrogConfig;
+export default BrogConfig;

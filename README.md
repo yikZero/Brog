@@ -40,7 +40,7 @@
 | OCCUPATION               | Design Engineer                                   | Occupation                             |
 | BIO                      | I‘m a boy                                         | Author Bio                             |
 | CONTACT_EMAIL            | i@yikzero.com                                     | Email Address, used for Gravatar       |
-| SITE_URL                 | https://broog.vercel.app                           | Site url, Generate SiteMap             |
+| SITE_URL                 | https://blog.yikzero.com                           | Site url, Generate SiteMap             |
 | HOMEPAGE_POST_NUMBER     | 3                                                   | Number of Posts Displayed on Homepage  |
 | HOMEPAGE_PROJECT_NUMBER  | 3                                                   | Number of Projects Displayed on Homepage |
 | SINCE                    | 2023                                                | If empty, the current year is used     |
