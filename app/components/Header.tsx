@@ -25,3 +25,5 @@ export default async function Header() {
     </>
   );
 }
+
+export const revalidate = 60;
