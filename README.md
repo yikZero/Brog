@@ -1,4 +1,4 @@
-<h4 align="right"><strong>English</strong> | <a href="https://github.com/yikZero/Brog/blob/main/README_CN.md">简体中文</a></h4>
+<h4 align="right"><strong>English</strong> | <a href="https://github.com/yikZero/Brog-Sanity/blob/main/README_CN.md">简体中文</a></h4>
 <h1 align="center">Brog</h1>
 
 <p align="center"><strong>Next.js Blog powered by Vercel and Sanity</strong></p>
@@ -6,8 +6,8 @@
 <div align="center">
     <a href="https://twitter.com/yikZero" target="_blank">
     <img alt="twitter" src="https://img.shields.io/badge/follow-yikZero-blue?logo=Twitter"></a>
-    <a href="https://github.com/yikZero/Brog/blob/main/LICENSE" target="_blank">
-    <img alt="GitHub commit" src="https://img.shields.io/github/license/yikZero/Brog"></a>
+    <a href="https://github.com/yikZero/Brog-Sanity/blob/main/LICENSE" target="_blank">
+    <img alt="GitHub commit" src="https://img.shields.io/github/license/yikZero/Brog-Sanity"></a>
 </div>
 
 ## Features
