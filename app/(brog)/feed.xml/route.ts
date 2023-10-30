@@ -22,7 +22,7 @@ export async function GET() {
     feed.item({
       title: post.title,
       guid: post._id,
-      url: `${BrogConfig.SITE_URL}/posts/${post.slug}`,
+      url: `${BrogConfig.SITE_URL}/posts/${post.slug.current}`,
       description: post.description,
       date: new Date(post.publishedAt),
     })
