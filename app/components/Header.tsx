@@ -1,11 +1,15 @@
 import Link from "next/link";
 import BrogConfig from "../../brog.config";
 import MenuItem from "./Menu";
-import { getAllMenus } from "@/sanity/lib/queries";
+// import { getAllMenus } from "@/sanity/lib/queries";
 
-export default async function Header() {
+export default function Header() {
   
-  const menus = await getAllMenus();
+  const menus = [
+    { title: "文章", slug: "posts" },
+    { title: "项目", slug: "projects" },
+    { title: "RSS", slug: "feed.xml" },
+  ];
 
   return (
     <>
@@ -17,8 +21,8 @@ export default async function Header() {
           {BrogConfig.BLOG_TITLE}
         </Link>
         <div className="flex flex-row gap-5 text-sm">
-          {menus.map((menu) => (
-            <MenuItem key={menu._id} menu={menu} />
+          {menus.map((menu, index) => (
+            <MenuItem key={index} menu={menu} />
           ))}
         </div>
       </header>
