@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: BrogConfig.SITE_URL,
     types: {
-      'application/rss+xml': [{ url: 'rss', title: 'RSS 订阅' }],
+      'application/rss+xml': [{ url: 'rss', title: BrogConfig.WEB_TITLE }],
     },
   },
 };
