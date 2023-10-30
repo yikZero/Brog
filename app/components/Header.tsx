@@ -26,4 +26,4 @@ export default async function Header() {
   );
 }
 
-export const revalidate = 60;
+export const revalidate = 3600;
