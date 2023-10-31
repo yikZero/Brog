@@ -2,6 +2,8 @@ import RSS from "rss";
 import BrogConfig from '@/brog.config';
 import { getPosts } from "@/sanity/lib/queries";
 
+export const revalidate = 3600;
+
 export async function GET() {
   const feed = new RSS({
     title: BrogConfig.BLOG_TITLE,
@@ -34,5 +36,3 @@ export async function GET() {
     },
   })
 }
-
-export const revalidate = 3600;

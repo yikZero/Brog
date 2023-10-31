@@ -8,7 +8,6 @@ export default function Header() {
   const menus = [
     { title: "文章", slug: "posts" },
     { title: "项目", slug: "projects" },
-    { title: "RSS", slug: "feed.xml" },
   ];
 
   return (
