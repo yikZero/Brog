@@ -20,8 +20,8 @@ export const getPostsQuery = (limit?: number) => {
   }`;
 };
 
-export const getPosts = (limit?: number) =>
-  clientFetch<Post[]>(getPostsQuery(limit));
+export const getPosts = (limit?: string | number) =>
+  clientFetch<Post[]>(getPostsQuery(Number(limit)));
 
 // Get all posts slug for sitemap
 export const getPostsSlugQuery = () =>
@@ -60,8 +60,8 @@ export const getProjectsQuery = (limit?: number) => {
   }`;
 };
 
-export const getProjects = (limit?: number) =>
-  clientFetch<Project[]>(getProjectsQuery(limit));
+export const getProjects = (limit?: string | number) =>
+  clientFetch<Project[]>(getProjectsQuery(Number(limit)));
 
 // Get projects count
 export const projectNumberQuery = () =>
