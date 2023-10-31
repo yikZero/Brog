@@ -11,6 +11,9 @@ import {
   getProjectsCount,
 } from "@/sanity/lib/queries";
 
+import { type Post } from "@/sanity/schemas/post";
+import { type Project } from "@/sanity/schemas/project";
+
 export const metadata: Metadata = {
   title: `首页｜${BrogConfig.WEB_TITLE}`,
 };
@@ -30,7 +33,7 @@ export default async function Home() {
       <Profile />
       <section className="HomepagePosts">
         <Title title="文章" href="/posts" showMore={postsNumber > postsLimit} />
-        {posts.map((post) => (
+        {posts.map((post: Post) => (
           <PostItem key={post._id} post={post} />
         ))}
       </section>
@@ -40,7 +43,7 @@ export default async function Home() {
           href="/projects"
           showMore={projectsNumber > projectsLimit}
         />
-        {projects.map((project) => (
+        {projects.map((project: Project) => (
           <ProjectItem key={project._id} project={project} />
         ))}
       </section>
