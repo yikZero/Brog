@@ -1,5 +1,5 @@
 import BrogConfig from "@/brog.config";
-import PostItem from "./PostItem";
+import PostItem from "@/components/PostItem";
 import { getPosts } from "@/sanity/lib/queries";
 import { type Post } from "@/sanity/schemas/post";
 

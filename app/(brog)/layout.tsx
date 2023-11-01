@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import "../globals.css";
-import BrogConfig from "../../brog.config";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import "@/app/globals.css";
+import BrogConfig from "@/brog.config";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BrogConfig.SITE_URL),

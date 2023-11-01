@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import BrogConfig from "../../../brog.config";
-import BlogPosts from "@/app/components/BlogPosts";
+import BrogConfig from "@/brog.config";
+import BlogPosts from "@/components/BlogPosts";
 
 export const metadata: Metadata = {
   title: `文章列表｜${BrogConfig.WEB_TITLE}`,

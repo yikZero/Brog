@@ -1,4 +1,4 @@
-import { BrogLogo } from "@/app/components/Icons";
+import { BrogLogo } from "@/components/Icons";
 
 export default function PostSkeleton() {
   return (

@@ -1,6 +1,6 @@
 import Link from "next/link";
-import BrogConfig from "../../brog.config";
-import MenuItem from "./Menu";
+import BrogConfig from "@/brog.config";
+import MenuItem from "@/components/Menu";
 // import { getAllMenus } from "@/sanity/lib/queries";
 
 export default function Header() {

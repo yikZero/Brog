@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LinkIcon } from "./Icons";
+import { LinkIcon } from "@/components/Icons";
 import { type Project } from "@/sanity/schemas/project";
 
 export default function PostItem ({ project }: { project: Project }) {

@@ -1,10 +1,10 @@
-import BrogConfig from "../../brog.config";
-import Profile from "../components/Profile";
-import Title from "../components/Title";
+import BrogConfig from "@/brog.config";
+import Profile from "@/components/Profile";
+import Title from "@/components/Title";
 import type { Metadata } from "next";
 
-import BlogPosts from "../components/BlogPosts";
-import BlogProjects from "../components/BlogProjects";
+import BlogPosts from "@/components/BlogPosts";
+import BlogProjects from "@/components/BlogProjects";
 
 export const metadata: Metadata = {
   title: `首页｜${BrogConfig.WEB_TITLE}`,

@@ -1,5 +1,5 @@
 import BrogConfig from "@/brog.config";
-import ProjectItem from "./ProjectItem";
+import ProjectItem from "@/components/ProjectItem";
 import { getProjects } from "@/sanity/lib/queries";
 import { type Project } from "@/sanity/schemas/project";
 

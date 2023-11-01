@@ -1,7 +1,7 @@
-import PostAuthor from "./PostAuthor";
+import PostAuthor from "@/components/PostAuthor";
 import { type Post } from "@/sanity/schemas/post";
 import { PortableText } from "@portabletext/react";
-import components from "./PortableTextComponents";
+import components from "@/components/PortableTextComponents";
 
 export default function PostPage({ post }: { post: Post }) {
   const { title, publishedAt, body } = post;

@@ -1,5 +1,5 @@
 import BrogConfig from "@/brog.config";
-import Post from "@/app/components/Post";
+import Post from "@/components/Post";
 import { getPostPaths, getPost } from "@/sanity/lib/queries";
 
 // Prepare Next.js to know which routes already exist
