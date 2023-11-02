@@ -1,6 +1,12 @@
 import BrogConfig from "@/brog.config";
 import Post from "@/components/Post";
-import { getPost } from "@/sanity/lib/queries";
+import { getPostPaths, getPost } from "@/sanity/lib/queries";
+
+// Prepare Next.js to know which routes already exist
+export async function generateStaticParams() {
+  const posts = await getPostPaths();
+  return posts;
+}
 
 export async function generateMetadata({
   params,
