@@ -38,7 +38,7 @@ export const getPostsCount = () => clientFetch<number>(getPostNumberQuery());
 // Get a single post by its slug
 export const getPostQuery = () =>
   groq`*[_type == "post" && slug.current == $slug][0]{ 
-  title, publishedAt, body
+  title, publishedAt, "categories": categories[]->title, body
 }`;
 
 export const getPost = (slug: string) =>
