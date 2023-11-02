@@ -9,7 +9,7 @@ const components: PortableTextComponents = {
         : undefined;
       return (
         <Link
-          className="text-blue-500 hover:underline hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-500"
+          className="hover:underline hover:text-blue-600 dark:hover:text-blue-500"
           href={value.href}
           rel={rel}
           target="_blank"
