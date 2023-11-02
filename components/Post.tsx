@@ -13,16 +13,18 @@ export default function PostPage({ post }: { post: Post }) {
           <div className="text-gray-600 dark:text-gray-400">
             {publishedAt.toLocaleString()}
           </div>
-          <div className="flex flex-row gap-2 mb-4">
-            {categories.map((category) => (
-              <div
-                key={category}
-                className="text-gray-700 dark:text-gray-300 rounded"
-              >
-                #{category}
-              </div>
-            ))}
-          </div>
+          {categories && (
+            <div className="flex flex-row gap-2 mb-4">
+              {categories.map((category) => (
+                <div
+                  key={category}
+                  className="text-gray-700 dark:text-gray-300 rounded"
+                >
+                  #{category}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
       <section className="pt-8">
