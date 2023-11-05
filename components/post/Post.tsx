@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const mdxComponents: MDXComponents = {
   a: ({ href, children }) => <Link href={href as string} rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-blue-500 transition ease-in-out duration-300">{children}</Link>,
-  img: (props) => <img className="rounded dark:brightness-75 dark:transition-[filter] dark:hover:brightness-100" {...props} />,
+  img: (props) => <img className="rounded dark:brightness-90 dark:transition-[filter] dark:hover:brightness-100" {...props} />,
   pre: (props) => <pre className="dark:bg-gray-900" {...props}></pre>
 };
 
