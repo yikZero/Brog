@@ -1,6 +1,6 @@
 import { type Post } from "@/sanity/schemas/post";
 import { PortableText } from "@portabletext/react";
-import components from "@/components/PortableTextComponents";
+import PortableTextComponents from "@/components/PortableTextComponents";
 
 export default function PostPage({ post }: { post: Post }) {
   const { title, publishedAt, categories = [], body } = post;
@@ -28,7 +28,7 @@ export default function PostPage({ post }: { post: Post }) {
         </div>
       </section>
       <section className="pt-8">
-        {body ? <PortableText value={body} components={components} /> : null}
+        {body ? <PortableText value={body} components={PortableTextComponents} /> : null}
       </section>
     </main>
   );

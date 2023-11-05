@@ -1,7 +1,8 @@
 import { type PortableTextComponents } from "@portabletext/react";
+import { PortableTextImage } from "./portable-text/PortableTextImage";
 import Link from "next/link";
 
-const components: PortableTextComponents = {
+const PortableTextComponents: PortableTextComponents = {
   marks: {
     link: ({ children, value }) => {
       const rel = !value.href.startsWith("/")
@@ -19,6 +20,9 @@ const components: PortableTextComponents = {
       );
     },
   },
+  types: {
+    image: PortableTextImage,
+  },
 };
 
-export default components;
+export default PortableTextComponents;
