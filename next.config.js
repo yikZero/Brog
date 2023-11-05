@@ -31,6 +31,9 @@ const nextConfig = {
       },
     ];
   },
+  experimental: {
+    webpackBuildWorker: true
+},
 };
 
 module.exports = withContentlayer(nextConfig);
