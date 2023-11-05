@@ -28,5 +28,3 @@ export default function Header() {
     </>
   );
 }
-
-export const revalidate = 3600;
