@@ -18,10 +18,12 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }) {
   const post = findPostBySlug(params.slug);
   if (!post) {
-    return;
+    return {};
   }
   return {
     title: `${post.title}｜${BrogConfig.WEB_TITLE}`,
+    description: post.description,
+    
   };
 }
 

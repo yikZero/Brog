@@ -32,7 +32,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN">
-      <body className="bg-gray-50 dark:bg-gray-950 max-w-2xl flex flex-col gap-16 sm:gap-24 mx-4 sm:mx-auto overflow-y-scroll">
+      <body className="bg-gray-50 dark:bg-gray-950 max-w-2xl 2xl:max-w-3xl flex flex-col gap-16 sm:gap-24 mx-4 sm:mx-auto overflow-y-scroll">
         <Header />
         {children}
         <Footer />

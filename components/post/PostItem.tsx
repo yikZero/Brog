@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Post } from "contentlayer/generated";
-import { format, parseISO } from "date-fns";
+import DateFormatter from "@/utils/DateFormatter";
 
 export default function PostItem({ post }: { post: Post }) {
 
@@ -19,7 +19,7 @@ export default function PostItem({ post }: { post: Post }) {
           </div>
         </div>
         <div className="text-gray-600 dark:text-gray-400 font-normal whitespace-nowrap">
-          {format(parseISO(post.publishedAt), 'yyyy-MM-dd')}
+          <DateFormatter date={post.publishedAt}/>
         </div>
       </Link>
     </>

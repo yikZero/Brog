@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { LinkIcon } from "@/components/Icons";
 import { Project } from "contentlayer/generated";
-import { format, parseISO } from "date-fns";
+import DateFormatter from "@/utils/DateFormatter";
 
 export default function PostItem ({ project }: { project: Project }) {
 
@@ -24,7 +24,7 @@ export default function PostItem ({ project }: { project: Project }) {
             </div>
           </div>
           <div className="text-gray-600 dark:text-gray-400 font-normal whitespace-nowrap">
-            {format(parseISO(project.publishedAt), 'yyyy-MM')}
+            <DateFormatter date={project.publishedAt} showDay={false} />
           </div>
         </Link>
     </>
