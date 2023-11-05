@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "@/app/globals.css";
+import "../globals.css";
 import BrogConfig from "@/brog.config";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
