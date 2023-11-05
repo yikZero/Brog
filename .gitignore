@@ -40,3 +40,5 @@ next-env.d.ts
 
 # contentlayer
 .contentlayer
+
+.DS_Store

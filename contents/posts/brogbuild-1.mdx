@@ -20,7 +20,7 @@ publishedAt: 2023-10-04
 
 ## 初衷
 
-最初是因为，我学了前端，然后就想了解后端，最初是做了一个基于 edge-tts 的语音转文字全栈项目 [Rotts](https://rotts.yikzero.com/)（前端React + 后端 Flask），但这个项目很简单，后端基本就是请求 API，获取声音列表，然后将声音、音高、文字等信息传递给 edge-tts，等待声音返回，然后播放/下载就行了。后台感觉还没有怎么体验就感觉结束了。
+最初是因为，我学了前端，然后就想了解后端，最初是做了一个基于 edge-tts 的语音转文字全栈项目 [Rotts](https://rotts.yikzero.com/)（前端 React + 后端 Flask），但这个项目很简单，后端基本就是请求 API，获取声音列表，然后将声音、音高、文字等信息传递给 edge-tts，等待声音返回，然后播放/下载就行了。后台感觉还没有怎么体验就感觉结束了。
 
 所以，就想着找另外一个项目，继续学习下后端。首先想到的是 Node.js，调研过程中，看到了很多人推荐的 Next.js，也是基于 Node.js。那就一拍即合，我也想简单造一个轮子，做一个将 Notion 作为 CMS 的博客系统。视觉上一切从简，减少负担，着重于内容的渲染。
 
@@ -39,7 +39,7 @@ publishedAt: 2023-10-04
 
 其实我在刚开始的获取数据的时候，就有疑问，我这边 fetch 一下，那边 fetch 一下。都是相同的数据，会不会多次请求，会很浪费呀？
 
-为了这个，我也一直在将函数功能与请求分离开，传递好几个 props 就行…. 但其实至少在 React 里不用在意这个。
+为了这个，我也一直在将函数功能与请求分离开，传递好几个 props 就行……. 但其实至少在 React 里不用在意这个。
 
 > Passing data between a parent layout and its children is not possible. However, you can fetch the same data in a route more than once, and React will automatically dedupe the requests without affecting performance.
 > 
@@ -48,9 +48,9 @@ publishedAt: 2023-10-04
 
 ### 服务端组件
 
-怎么样算是服务端组件呢，放在 `app/` 目录下的应该都属于服务端组件。我不知道是不是服务端组件的时候，我把我用到的 components、lib 文件目录，全部扔到 `app/` … 就为了服务端组件。
+怎么样算是服务端组件呢，放在 `app/` 目录下的应该都属于服务端组件。我不知道是不是服务端组件的时候，我把我用到的 components、lib 文件目录，全部扔到 `app/` …… 就为了服务端组件。
 
-想让其变成客户端组件，那就加一个`'use client’` 在顶部，那就会被识别为客户端组件。Next.js 官方推荐能服务端就服务端。
+想让其变成客户端组件，那就加一个`use client` 在顶部，那就会被识别为客户端组件。Next.js 官方推荐能服务端就服务端。
 
 ### next/image 应用
 
@@ -58,7 +58,7 @@ Next.js 官方因为 [LCP performance](https://almanac.httparchive.org/en/2022/p
 
 具体使用方法可参照 [Image Optimization](https://nextjs.org/docs/app/building-your-application/optimizing/images)
 
-我以为会很简单喽，替换个名字就好，但是其要求我提供明确的高度和宽度。我动态获取的图片，我咋知道图片的高度和宽度呢。所以也就使用了奇技淫巧….也是 [stackoverflow](https://stackoverflow.com/questions/65169431/how-to-set-the-next-image-component-to-100-height) 上的方案。
+我以为会很简单喽，替换个名字就好，但是其要求我提供明确的高度和宽度。我动态获取的图片，我咋知道图片的高度和宽度呢。所以也就使用了奇技淫巧…….也是 [stackoverflow](https://stackoverflow.com/questions/65169431/how-to-set-the-next-image-component-to-100-height) 上的方案。
 
 ```html
 <figure className="relative">
@@ -70,13 +70,11 @@ Next.js 官方因为 [LCP performance](https://almanac.httparchive.org/en/2022/p
 
 ![Notion API](https://cdn.yikzero.com/markdown/images/202311050659712.png)
 
-Notion API
-
 ### 数据获取
 
 Notion 官方有 [@notionhq/client](https://www.npmjs.com/package/@notionhq/client)，同时 react-notion-x 也有一个 [notion-client](https://www.npmjs.com/package/notion-client)。我是先了解到的 notion-client ，所以样式写完之后，尝试集成的是第三方实现的。
 
-怎么说呢，notion-client 也挺好，提供一个公开的 `NOTION_PAGE_ID` 环境变量，即可获取到数据。但是获取到是全量数据，没办法跟官方的 API 一样根据字段名进行筛选的功能，所以整理数据会麻烦很多。这对于我这新手还是麻烦太多了….毕竟，在 Notion 获取的数据是一层一层套娃的，每一个块都有其 ID，搞得我晕头转向。
+怎么说呢，notion-client 也挺好，提供一个公开的 `NOTION_PAGE_ID` 环境变量，即可获取到数据。但是获取到是全量数据，没办法跟官方的 API 一样根据字段名进行筛选的功能，所以整理数据会麻烦很多。这对于我这新手还是麻烦太多了…….毕竟，在 Notion 获取的数据是一层一层套娃的，每一个块都有其 ID，搞得我晕头转向。
 
 最后也还是参考  [notion-blog-nextjs](https://github.com/samuelkraft/notion-blog-nextjs) 应用的官方 API，来获取到相对应的数据。
 
@@ -84,8 +82,8 @@ Notion 官方有 [@notionhq/client](https://www.npmjs.com/package/@notionhq/clie
 
 Notion 官方提供的数据中的图片链接是 Amazon 临时链接，一个小时就会过期。然后就会导致图片挂了。
 
-**Vercel cron：**很多人也会选择使用 Vercel cron 功能，每个小时重新构建渲染一下。但我觉得这也太浪费资源、太不环保了 (：
+**Vercel Cron：** 很多人也会选择使用 Vercel cron 功能，每个小时重新构建渲染一下。但我觉得这也太浪费资源、太不环保了 (：
 
-**临时地址转化为永久地址：**方案的话可以参考 [fix: solve linked img crash #524](https://github.com/tangly1024/NotionNext/pull/524/files)
+**临时地址转化为永久地址：** 方案的话可以参考 [fix: solve linked img crash #524](https://github.com/tangly1024/NotionNext/pull/524/files)
 
-**PicGo 上传至又拍云：**因为我迁移过数据，Markdown 图片如果都是相对地址的话，简直是个灾难。所以，我现在就会选择通过 PicGo 上传至又拍云中，返回一个我的 CDN 地址。如果要迁移的话，那至少图片不会丢。
+**PicGo 上传至又拍云：** 因为我迁移过数据，Markdown 图片如果都是相对地址的话，简直是个灾难。所以，我现在就会选择通过 PicGo 上传至又拍云中，返回一个我的 CDN 地址。如果要迁移的话，那至少图片不会丢。

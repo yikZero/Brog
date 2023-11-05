@@ -13,7 +13,7 @@ export const Post = defineDocumentType(() => ({
   computedFields: {
     url: {
       type: "string",
-      resolve: (post) => post._raw.flattenedPath.replace(/posts\/?/, ''),
+      resolve: (post) => post._raw.flattenedPath.replace(/posts\/?/, ""),
     },
   },
 }));

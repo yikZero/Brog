@@ -4,11 +4,11 @@ import type { MDXComponents } from "mdx/types";
 import { format, parseISO } from "date-fns";
 
 import Link from "next/link";
-import Image from "next/image";
 
 const mdxComponents: MDXComponents = {
-  a: ({ href, children }) => <Link href={href as string}>{children}</Link>,
-  Image: (props) => <Image className="rounded-full" alt="" {...props} />,
+  a: ({ href, children }) => <Link href={href as string} rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-blue-500 transition ease-in-out duration-300">{children}</Link>,
+  img: (props) => <img className="rounded dark:brightness-75 dark:transition-[filter] dark:hover:brightness-100" {...props} />,
+  pre: (props) => <pre className="dark:bg-gray-900" {...props}></pre>
 };
 
 export default async function PostPage({ post }: { post: Post }) {
