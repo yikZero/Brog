@@ -2,7 +2,6 @@ const { withContentlayer } = require("next-contentlayer");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  swcMinify: true,
   images: {
     // 图片压缩
     formats: ["image/avif", "image/webp"],

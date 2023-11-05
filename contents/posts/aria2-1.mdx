@@ -1,0 +1,259 @@
+---
+title: Aria2 下载完毕自动邮件通知
+description: 研究了如何在 Aria2 下载完成后使用 sendmail 和自定义脚本自动发送邮件通知。虽然基本功能实现，但存在一次下载发送两封邮件和获取文件名困难的问题。
+categories: [Aria2, Email]
+publishedAt: 2020-02-09
+---
+
+## 前言
+
+由于本人没啥代码基础，从来没学过代码这方面知识，所以表述各方面可能不是很准确。这个脚本是我在下载电影的时候想到的。现在社会都在实现智能化，所以，我也就想折腾下，搞一个邮件下载通知。
+
+## 截图
+
+![Email 截图](https://cdn.yikzero.com/markdown/images/202311050924340.png)
+
+## sendmail邮件系统搭建
+
+安装调试的时候碰到过挺多问题的，但搜索了一下。按照这位博主的操作记录（https://www.cnblogs.com/kevingrace/p/6143977.html），配合宝塔一般都可以成功配置，自己多测试几遍。
+
+## 脚本的寻找与修改
+
+我先是在[恩山无线论坛](https://www.right.com.cn/forum/thread-163098-1-1.html)找到了一篇楼主修改过的用来通知的脚本。
+
+该作者提供的脚本里，邮件什么的都是填上就好，但是我当时`sendmail`命令出现了一些问题，然后就跟着第一部分的记录走了，一些脚本的东西，我已经写入服务器了，所以，改了很多原来脚本的东西。
+
+我用作者的脚本调试的时候`aria2.log`中一直会出现 `no such file or directory`这个问题 但是找不到原因所在。然后我就想全部脚本都用`管道`来写。。好像有点笨。。但不会其他方法了。 [collapse status=“false” title=" email.sh "] echo "
+
+```jsx
+文件路径：$3
+
+完成时间 `date +%Y/%m/%d`  `date +%T`
+
+负载 "`uptime`"
+
+版本 "`uname -a`"
+
+From Zero.
+
+Have a nice day." | mail -s 'Aria2通知' example@qq.com
+```
+
+这就是我的脚本内容了，很简单是吧。。但我其实操作了好久，才弄出来一个能用的， `Aria2通知` 是邮件的标题，具体的参数含义在第一部分的文章链接里应该都能找到。
+
+## 最后的调试
+
+具体步骤：
+
+1. 将`email.sh`脚本上传到服务器
+2. 修改`aria2.conf`里面的`on-download-complete=`参数，`=`后面填写脚本`绝对地址`
+
+为了同时实现：
+
+- 邮件通知
+- 自动上传
+
+我是在 `autoupload.sh` 脚本 中来调用`email.sh`
+
+具体写法：
+
+```jsx
+. /root/.aria2/email.sh
+```
+
+下面附了 `autoupload.sh` 这脚本需要配合`rclone`食用。我的`Aria2`是用的 [Aria2一键安装管理脚本](https://github.com/P3TERX/aria2.sh)
+
+```jsx
+#!/usr/bin/env bash
+#============================================================
+# https://github.com/P3TERX/aria2.conf
+# File name：autoupload.sh
+# Description: Aria2 download completes calling Rclone upload
+# Lisence: MIT
+# Version: 2.0
+# Author: P3TERX
+# Blog: https://p3terx.com
+#============================================================
+
+## 基础设置 ##
+
+# Rclone 配置时填写的网盘名(name)
+DRIVE_NAME='Onedrive'
+
+# 网盘目录。即上传目标路径，留空为网盘根目录，末尾不要有斜杠。
+DRIVE_PATH='/DRIVEX/Download'
+
+# Aria2下载目录
+# Aria2 一键安装管理脚本使用选项统一进行修改。
+# Aria2 Pro Docker 镜像无需修改，通过目录映射进行设置。
+DOWNLOAD_PATH='/root/Download'
+
+## 文件过滤 ##
+
+# 限制最低上传大小，仅 BT 多文件下载时有效，用于过滤无用文件。低于此大小的文件将被删除，不会上传。
+#MIN_SIZE=10m
+
+# 保留文件类型，仅 BT 多文件下载时有效，用于过滤无用文件。其它文件将被删除，不会上传。
+#INCLUDE_FILE='mp4,mkv,rmvb,mov'
+
+# 排除文件类型，仅 BT 多文件下载时有效，用于过滤无用文件。排除的文件将被删除，不会上传。
+#EXCLUDE_FILE='html,url,lnk,txt,jpg,png'
+
+## 高级设置 ##
+
+# RCLONE 配置文件路径
+#export RCLONE_CONFIG=$HOME/.config/rclone/rclone.conf
+
+# RCLONE 配置文件密码
+#export RCLONE_CONFIG_PASS=password
+
+# RCLONE 并行上传文件数，仅对单个任务有效。
+#export RCLONE_TRANSFERS=4
+
+# RCLONE 块的大小，默认5M，理论上是越大上传速度越快，同时占用内存也越多。如果设置得太大，可能会导致进程中断。
+#export RCLONE_CACHE_CHUNK_SIZE=5M
+
+# RCLONE 块可以在本地磁盘上占用的总大小，默认10G。
+#export RCLONE_CACHE_CHUNK_TOTAL_SIZE=10G
+
+# RCLONE 上传失败重试次数，默认 3
+#export RCLONE_RETRIES=3
+
+# RCLONE 上传失败重试等待时间，默认禁用，单位 s, m, h
+export RCLONE_RETRIES_SLEEP=30s
+
+# RCLONE 异常退出重试次数
+RETRY_NUM=3
+
+#============================================================
+
+FILE_PATH=$3                                          # Aria2传递给脚本的文件路径。BT下载有多个文件时该值为文件夹内第一个文件，如/root/Download/a/b/1.mp4
+REMOVE_DOWNLOAD_PATH=${FILE_PATH#${DOWNLOAD_PATH}/}   # 路径转换，去掉开头的下载路径。
+TOP_PATH=${DOWNLOAD_PATH}/${REMOVE_DOWNLOAD_PATH%%/*} # 路径转换，BT下载文件夹时为顶层文件夹路径，普通单文件下载时与文件路径相同。
+RED_FONT_PREFIX="\033[31m"
+LIGHT_GREEN_FONT_PREFIX="\033[1;32m"
+YELLOW_FONT_PREFIX="\033[1;33m"
+LIGHT_PURPLE_FONT_PREFIX="\033[1;35m"
+FONT_COLOR_SUFFIX="\033[0m"
+INFO="[${LIGHT_GREEN_FONT_PREFIX}INFO${FONT_COLOR_SUFFIX}]"
+ERROR="[${RED_FONT_PREFIX}ERROR${FONT_COLOR_SUFFIX}]"
+WARRING="[${YELLOW_FONT_PREFIX}WARRING${FONT_COLOR_SUFFIX}]"
+
+TASK_INFO() {
+    echo -e "
+-------------------------- [${YELLOW_FONT_PREFIX}TASK INFO${FONT_COLOR_SUFFIX}] --------------------------
+${LIGHT_PURPLE_FONT_PREFIX}Download path:${FONT_COLOR_SUFFIX} ${DOWNLOAD_PATH}
+${LIGHT_PURPLE_FONT_PREFIX}File path:${FONT_COLOR_SUFFIX} ${FILE_PATH}
+${LIGHT_PURPLE_FONT_PREFIX}Upload path:${FONT_COLOR_SUFFIX} ${UPLOAD_PATH}
+${LIGHT_PURPLE_FONT_PREFIX}Remote path:${FONT_COLOR_SUFFIX} ${REMOTE_PATH}
+-------------------------- [${YELLOW_FONT_PREFIX}TASK INFO${FONT_COLOR_SUFFIX}] --------------------------
+"
+}
+
+CLEAN_UP() {
+    [[ -n ${MIN_SIZE} || -n ${INCLUDE_FILE} || -n ${EXCLUDE_FILE} ]] && echo -e "${INFO} Clean up excluded files ..."
+    [[ -n ${MIN_SIZE} ]] && rclone delete -v "${UPLOAD_PATH}" --max-size ${MIN_SIZE}
+    [[ -n ${INCLUDE_FILE} ]] && rclone delete -v "${UPLOAD_PATH}" --exclude "*.{${INCLUDE_FILE}}"
+    [[ -n ${EXCLUDE_FILE} ]] && rclone delete -v "${UPLOAD_PATH}" --include "*.{${EXCLUDE_FILE}}"
+}
+
+UPLOAD_FILE() {
+    RETRY=0
+    while [ ${RETRY} -le ${RETRY_NUM} ]; do
+        [ ${RETRY} != 0 ] && (
+            echo
+            echo -e "$(date +"%m/%d %H:%M:%S") ${ERROR} Upload failed! Retry ${RETRY}/${RETRY_NUM} ..."
+            echo
+        )
+        rclone move -v "${UPLOAD_PATH}" "${REMOTE_PATH}"
+        RCLONE_EXIT_CODE=$?
+        if [ ${RCLONE_EXIT_CODE} -eq 0 ]; then
+            [ -e "${DOT_ARIA2_FILE}" ] && rm -vf "${DOT_ARIA2_FILE}"
+            rclone rmdirs -v "${DOWNLOAD_PATH}" --leave-root
+            echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Upload done: ${UPLOAD_PATH}"
+            break
+        else
+            RETRY=$((${RETRY} + 1))
+            [ ${RETRY} -gt ${RETRY_NUM} ] && (
+                echo
+                echo -e "$(date +"%m/%d %H:%M:%S") ${ERROR} Upload failed: ${UPLOAD_PATH}"
+                echo
+            )
+            sleep 3
+        fi
+    done
+}
+
+UPLOAD() {
+    echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Start upload..."
+    TASK_INFO
+    UPLOAD_FILE
+}
+
+if [ -z $2 ]; then
+    echo && echo -e "${ERROR} This script can only be used by passing parameters through Aria2."
+    echo && echo -e "${WARRING} 直接运行此脚本可能导致无法开机！"
+    exit 1
+elif [ $2 -eq 0 ]; then
+    exit 0
+fi
+
+echo
+echo -e "
+-----------------------------------------------------------
+    _         _          _   _       _                 _
+   / \  _   _| |_ ___   | | | |_ __ | | ___   __ _  __| |
+  / _ \| | | | __/ _ \  | | | | '_ \| |/ _ \ / _\` |/ _\` |
+ / ___ \ |_| | || (_) | | |_| | |_) | | (_) | (_| | (_| |
+/_/   \_\__,_|\__\___/   \___/| .__/|_|\___/ \__,_|\__,_|
+                              |_|
+
+https://github.com/P3TERX/aria2.conf
+File name：autoupload.sh
+Description: Aria2 download completes calling Rclone upload
+Lisence: MIT
+Version: 2.0
+Author: P3TERX
+Blog: https://p3terx.com
+-----------------------------------------------------------
+"
+echo
+
+if [ -e "${FILE_PATH}.aria2" ]; then
+    DOT_ARIA2_FILE="${FILE_PATH}.aria2"
+elif [ -e "${TOP_PATH}.aria2" ]; then
+    DOT_ARIA2_FILE="${TOP_PATH}.aria2"
+fi
+
+if [ "${TOP_PATH}" = "${FILE_PATH}" ] && [ $2 -eq 1 ]; then # 普通单文件下载，移动文件到设定的网盘文件夹。
+    UPLOAD_PATH="${FILE_PATH}"
+    REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}"
+    UPLOAD
+    exit 0
+elif [ "${TOP_PATH}" != "${FILE_PATH}" ] && [ $2 -gt 1 ]; then # BT下载（文件夹内文件数大于1），移动整个文件夹到设定的网盘文件夹。
+    UPLOAD_PATH="${TOP_PATH}"
+    REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}/${REMOVE_DOWNLOAD_PATH%%/*}"
+    CLEAN_UP
+    UPLOAD
+    exit 0
+elif [ "${TOP_PATH}" != "${FILE_PATH}" ] && [ $2 -eq 1 ]; then # 第三方度盘工具下载（子文件夹或多级目录等情况下的单文件下载）、BT下载（文件夹内文件数等于1），移动文件到设定的网盘文件夹下的相同路径文件夹。
+    UPLOAD_PATH="${FILE_PATH}"
+    REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}/${REMOVE_DOWNLOAD_PATH%/*}"
+    UPLOAD
+    exit 0
+fi
+
+echo -e "${ERROR} Unknown error."
+TASK_INFO
+exit 1
+```
+
+### PS
+
+这个脚本我自己也不太满意，虽然能实现基本功能，但是存在这几个**问题**：
+
+1.一次下载会发两封邮件，因为种子下载完成一封邮件，文件下载完成一封邮件。
+
+2.我不懂语法，尝试过`basename`、`##/`什么的，但是我尝试挺久没成功获取文件名。
+
+**第一次写文章，排版什么的都不会，还挺啰嗦。但是挺好玩的。**

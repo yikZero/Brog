@@ -1,0 +1,141 @@
+---
+title: Hugo 折腾记录：从 0 到 1
+description: 学习 Hugo 时的记录
+categories: [Hello, World]
+publishedAt: 2022-03-23
+---
+
+## Hugo安装
+
+### 官方文档教程
+
+官网针对不同系统都有详尽的安装教程介绍：https://gohugo.io/installation/
+
+### Brew
+
+如果您是Mac用户，可以使用`brew`命令来安装。
+
+```bash
+brew install hugo
+```
+
+**注意：** 这种安装方式可能安装的不是最新版本的hugo，如果要使用最新版的hugo，请使用其他方式安装。
+
+## 配置文件格式
+
+作为一个小白，配置文件格式是选yaml、toml、json就成为了我第一个疑问。
+
+**TOML**
+
+1. 区分大小写
+2. 文件只能包含UTF-8编码的Unicode字符
+3. 对缩进不敏感
+
+**YAML**
+
+1. 文件以' - '开头，标记文档的开始
+2. 键值对由冒号分隔
+3. 列表以连字符开头
+4. 使用具有一个或多个空格的缩进来描述嵌套集合
+
+**JSON**
+
+1. 数据存储在名称/值对中
+2. 记录用逗号分隔 没有以下属性的尾随逗号是不允许的
+3. 双引号包装属性名称和字符串
+4. 单引号是不允许的
+
+### ****字符串差异****
+
+任何格式都支持Strings，但JSON不支持多行字符串，还不支持注释。
+
+```jsx
+# TOML
+key = "String Value"
+multiline = """\
+       The quick brown \
+       fox jumps over \
+       the lazy dog.\
+       """
+```
+
+```jsx
+# YAML
+key : String Value
+multilinePreservedLinebreaks:
+|
+  L1 - The quick brown
+  L2 - fox jumps over
+  L3 - the lazy dog.
+multilineReplaceLinebreaksWithWhitespace:
+>
+  This sentence ist just too long to keep it
+  on the same line.
+```
+
+```jsx
+// JSON
+{
+  "key" : "String Value"
+}
+```
+
+由于`JSON`较为麻烦的注释形式，`YAML`严格的缩进形式，我最终选择`TOML`作为配置文件格式，我也可以自由进行缩进，方便我查看。
+
+- 参考资料
+    
+    [JSON vs. YAML vs. TOML](https://martin-ueding.de/posts/json-vs-yaml-vs-toml/)
+    
+    [深入对比TOML，JSON和YAML](https://www.cnblogs.com/sunsky303/p/9208848.html)
+    
+
+## 零零散散的知识点
+
+1. `:=` **的含义**
+    1. 此符号`:=`是Python语言中的赋值运算符(主要称为海象运算符)，海象操作符压缩了我们的代码以使其更短。
+    
+    ```jsx
+    var a; //定义
+    a = 1; //赋值
+    ```
+    
+2. `layout/baseof.html`是所有页面的基础
+3. `layout/partials`文件夹中可以分部分`header` 、`footer`等
+4. 新增页面步骤：
+    1. 需要在`content`中添加一个`.md`文件
+    2. `layouts/_default`中增加同名页面
+5. 菜单激活`active`状态代码：
+    1. 根据官网[说明](https://gohugo.io/templates/menu-templates/#readout)的方式并不能成功添加`active`状态，因此寻找了其他方式来判断`active`
+    
+    ```jsx
+    {{ range .Site.Menus.main }}
+          {{- $menu_item_url := (cond (strings.HasSuffix .URL "/") .URL (printf "%s/" .URL) ) | absLangURL }}
+          {{- $page_url:= $currentPage.Permalink | absLangURL }}
+            <li>
+                <a {{- if eq $menu_item_url $page_url }} class="active" {{- end }} href="{{ .URL }}">
+                    {{ .Pre }}
+                    <span>{{ .Name }}</span>
+                </a>
+            </li>
+          {{ end }}
+    ```
+    
+6. css中`position`功能小知识点！
+    
+    ```jsx
+    .outer{
+    	position: relative;
+    }
+    
+    .inner{
+    	position: absolute;
+    	top: 0px;
+    	left: 0px;
+    }
+    ```
+    
+7. `Shortcode`可以简短代码，写一些方法。类似`function`
+    
+    具体参照写法： https://www.letswrite.tw/hugo-basic/
+    
+8. Svg更换颜色

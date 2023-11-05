@@ -2,14 +2,17 @@ import { Post } from "contentlayer/generated";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import type { MDXComponents } from "mdx/types";
 import { format, parseISO } from "date-fns";
+
 import Link from "next/link";
+import Image from "next/image";
 
 const mdxComponents: MDXComponents = {
   a: ({ href, children }) => <Link href={href as string}>{children}</Link>,
+  Image: (props) => <Image className="rounded-full" alt="" {...props} />,
 };
 
 export default async function PostPage({ post }: { post: Post }) {
-  
+
   const MDXContent = useMDXComponent(post.body.code);
 
   return (
@@ -18,7 +21,7 @@ export default async function PostPage({ post }: { post: Post }) {
         <h1 className="leading-tight mb-4">{post.title}</h1>
         <div className="flex flex-row gap-4">
           <div className="text-gray-600 dark:text-gray-400 mb-4">
-            {format(parseISO(post.publishedAt), 'yyyy-MM-dd')}
+            {format(parseISO(post.publishedAt), "yyyy-MM-dd")}
           </div>
           {post.categories && (
             <div className="flex flex-row gap-2">
