@@ -1,7 +1,7 @@
 ---
 title: R4S 安装 Plex 服务端记录
 description: 记录安装 Plex 时碰到的问题
-categories: [Hello, World]
+categories: [R4S, Plex]
 publishedAt: 2023-03-18
 ---
 
@@ -102,18 +102,16 @@ Host key verification failed.
 
 这个错误提示表明之前连接的远程服务器的密钥发生了变化，可能是服务器进行了系统更新或者管理员更改了服务器的密钥。为了保护信息安全，SSH 客户端会检查远程服务器的密钥并进行验证，如果密钥发生变化，就会出现这个错误提示。
 
-为了解决这个问题，需要更新本地计算机上存储的远程服务器的密钥数据。可以按照以下步骤操作：
+更新本地计算机的远程服务器密钥数据以解决问题。操作步骤如下：
 
-**一、删除本地计算机上存储的旧密钥数据**
+1. **删除旧密钥：**
+   执行 `ssh-keygen -R <remote_server_ip>` 删除本地计算机上的旧密钥数据。
 
-`ssh-keygen -R <remote_server_ip>`
+2. **连接远程服务器：**
+   使用 `ssh username@remote_server_ip` 连接。
 
-**二、输入以下命令来连接远程服务器**
+   - 系统会提示“Are you sure you want to continue connecting (yes/no)?”。输入 yes 并回车。
+   - 输入远程服务器密码以验证。
+   - 连接后，重新运行命令以设置 SSH 转发端口。
 
-`ssh username@remote_server_ip`
-
-1. 会提示”Are you sure you want to continue connecting (yes/no)?”，请输入 yes 并按回车键。
-1. 输入您在远程服务器上的密码并验证。
-1. 现在，您可以重新运行之前的命令来设置 SSH 转发端口。
-
-如此设置便可访问 PLEX 服务端了！
+完成后即可访问 PLEX 服务端。

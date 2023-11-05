@@ -28,8 +28,8 @@ export default async function PostPage({ post }: { post: Post }) {
     <main className="prose dark:prose-invert">
       <section className="flex flex-col border-b border-gray-200 dark:border-gray-800">
         <h1 className="leading-tight mb-4">{post.title}</h1>
-        <div className="flex flex-row gap-4">
-          <div className="text-gray-600 dark:text-gray-400 mb-4">
+        <div className="flex flex-row gap-4 mb-5">
+          <div className="text-gray-600 dark:text-gray-400">
             {format(parseISO(post.publishedAt), "yyyy-MM-dd")}
           </div>
           {post.categories && (
