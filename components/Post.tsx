@@ -1,6 +1,6 @@
 import { type Post } from "@/sanity/schemas/post";
 import { PortableText } from "@portabletext/react";
-import PortableTextComponents from "@/components/PortableTextComponents";
+import PortableTextComponents from "@/components/portable-text/PortableTextComponents";
 
 export default function PostPage({ post }: { post: Post }) {
   const { title, publishedAt, categories = [], body } = post;

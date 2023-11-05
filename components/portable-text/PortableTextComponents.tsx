@@ -1,5 +1,6 @@
 import { type PortableTextComponents } from "@portabletext/react";
-import { PortableTextImage } from "./portable-text/PortableTextImage";
+import { PortableTextImage } from "./PortableTextImage";
+import { PortableTextCodeBlock } from "./PortableTextCodeBlock";
 import Link from "next/link";
 
 const PortableTextComponents: PortableTextComponents = {
@@ -22,6 +23,7 @@ const PortableTextComponents: PortableTextComponents = {
   },
   types: {
     image: PortableTextImage,
+    codeBlock: PortableTextCodeBlock,
   },
 };
 
