@@ -3,9 +3,7 @@ const { withContentlayer } = require("next-contentlayer");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    // 图片压缩
-    formats: ["image/avif", "image/webp"],
-    // 允许next/image加载的图片 域名
+    // 允许next/image加载的图片域名
     remotePatterns: [
       {
         protocol: "https",
