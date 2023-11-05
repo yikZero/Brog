@@ -4,15 +4,24 @@ import type { MDXComponents } from "mdx/types";
 import { format, parseISO } from "date-fns";
 
 import Link from "next/link";
+import Image from "next/image";
 
 const mdxComponents: MDXComponents = {
-  a: ({ href, children }) => <Link href={href as string} rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-blue-500 transition ease-in-out duration-300">{children}</Link>,
-  img: (props) => <img className="rounded dark:brightness-90 dark:transition-[filter] dark:hover:brightness-100" {...props} />,
-  pre: (props) => <pre className="dark:bg-gray-900" {...props}></pre>
+  a: ({ href, children }) => (
+    <Link
+      href={href as string}
+      rel="noopener noreferrer"
+      className="hover:text-blue-600 dark:hover:text-blue-500 transition ease-in-out duration-300"
+    >
+      {children}
+    </Link>
+  ),
+  // @ts-expect-error
+  img: (props) => <Image sizes="100vw" width={0} height={0} className="m-0 w-full h-auto rounded-sm dark:brightness-90 dark:transition-[filter] dark:hover:brightness-100" alt="" {...props} />,
+  pre: (props) => <pre className="dark:bg-gray-900" {...props}></pre>,
 };
 
 export default async function PostPage({ post }: { post: Post }) {
-
   const MDXContent = useMDXComponent(post.body.code);
 
   return (
