@@ -3,18 +3,6 @@ import type { MDXComponents } from "mdx/types";
 import Link from "next/link";
 import Image from "next/image";
 
-const NextImage = (props: any) => (
-  <Image
-    alt={props.alt}
-    width={0}
-    height={0}
-    sizes="100vw"
-    placeholder="empty"
-    {...props}
-    className="m-0 w-full h-auto drop-shadow-sm rounded"
-  />
-);
-
 const mdxComponents: MDXComponents = {
   a: ({ href, children }) => (
     <Link
@@ -25,7 +13,6 @@ const mdxComponents: MDXComponents = {
       {children}
     </Link>
   ),
-  img: NextImage,
   pre: (props) => (
     <pre
       className="border-gray-400 dark:bg-gray-900 border dark:border-gray-800"
