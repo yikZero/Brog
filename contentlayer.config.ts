@@ -32,5 +32,5 @@ export const Project = defineDocumentType(() => ({
 
 export default makeSource({
   contentDirPath: "contents",
-  documentTypes: [Post, Project],
+  documentTypes: [Post, Project]
 });
