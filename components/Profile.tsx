@@ -6,7 +6,7 @@ export default function Profile() {
     <>
       <div className="flex flex-col gap-16">
         <div className="flex flex-col">
-          <div className="text-gray-800 dark:text-gray-200 font-semibold text-xl">{BrogConfig.AUTHOR}</div>
+          <div className="text-gray-800 dark:text-gray-200 font-semibold text-xl mb-1">{BrogConfig.AUTHOR}</div>
           <div className="text-sm text-gray-700 dark:text-gray-400">{BrogConfig.OCCUPATION}</div>
         </div>
         <div>

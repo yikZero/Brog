@@ -16,7 +16,7 @@ export default function EntryNavigation({
 
   return (
     <>
-      <div className="not-prose flex flex-row justify-between mt-16">
+      <div className="not-prose flex flex-row justify-between mt-16 gap-8">
         {prevPost ? (
           <Link
             href={`/posts/${prevPost.url}`}
@@ -29,7 +29,7 @@ export default function EntryNavigation({
               <div className="text-xs text-gray-400 dark:text-gray-600 pb-2">
                 上一篇
               </div>
-              <div className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 group-hover:dark:blue-500">
+              <div className="text-sm text-gray-700 dark:text-gray-400 group-hover:text-blue-600 group-hover:dark:blue-500 line-clamp-1">
                 {prevPost.title}
               </div>
             </div>
@@ -47,7 +47,7 @@ export default function EntryNavigation({
               <div className="text-xs text-gray-400 dark:text-gray-600 pb-2">
                 下一篇
               </div>
-              <div className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 group-hover:dark:blue-500">
+              <div className="text-sm text-gray-700 dark:text-gray-400 group-hover:text-blue-600 group-hover:dark:blue-500 line-clamp-1">
                 {nextPost.title}
               </div>
             </div>
