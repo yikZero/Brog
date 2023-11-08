@@ -10,7 +10,7 @@ export default function PostItem ({ project }: { project: Project }) {
         <Link
           href={project.url}
           target="_blank"
-          className="flex flex-row gap-6 sm:gap-12 justify-between items-center text-sm rounded group py-4"
+          className="flex flex-row gap-6 sm:gap-12 justify-between items-center text-sm rounded group py-5"
         >
           <div className="flex flex-col gap-1">
             <div className="flex flex-row gap-1 items-center">
