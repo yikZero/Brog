@@ -1,0 +1,151 @@
+---
+title: IFTTT 自动化推送通知
+description: 利用 IFTTT 实现学校通知推送到微信、邮箱等
+categories: [IFTTT, Wechat]
+publishedAt: 2021-10-14
+---
+
+## 前言
+
+之前有发过一篇文章，是关于学校官网 RSS 订阅的文章。有了 RSS 订阅地址，我们可以将 RSS 推送到我们的「RSS 客户端」来阅读网站更新的文章。写那一篇文章的时候，我只会在[Telegram](https://telegram.org/)上自己的「RssBot」上设置学校官网通知更新推送。没办法实现直接推送到微信，现在写一篇能够实现推送到微信的。
+
+![IFTTT 效果展示](https://cdn.yikzero.com/markdown/images/202311081017596.jpeg)
+
+## 获取 RSS 订阅地址
+
+💡 首先，我们要明确，网站不一定提供 RSS 订阅，只有部分网站提供 RSS ，没有 RSS 订阅的网站只能靠自己制作订阅源，或者寻找别人制作好的 RSS 订阅。在这里我推荐一个订阅源分享网站：**[RssHub](https://docs.rsshub.app/)** 作者：**[DIYgod](https://github.com/DIYgod)**
+
+**我以我们学校的订阅来演示：**
+
+```jsx
+1. 在RssHub中中找到我们学校的订阅地址：   #路径：路由-大学通知-浙江工业大学
+https://docs.rsshub.app/university.html#zhe-jiang-gong-ye-da-xue
+
+2.根据需要修改参数，这里我们需要公告栏（板块ID：1）的通知更新，因此我们的订阅链接为：
+https://rsshub.app/zjut/1   #如果需要每周会议的RSS订阅地址，那么将1改成2，即：https://rsshub.app/zjut/2
+```
+
+第一步完成了，我们得到的 RSS 订阅源地址是：https://rsshub.app/zjut/1
+
+## 学校通知更新推送邮箱
+
+- 打开 IFTTT 网站，并注册账号。**（可用谷歌账号一键登录）**
+- 单击右上角 Create ，进行项目的创建
+
+> IFTTT 是“if this then that”的缩写，简单来说的意思就是如果这样，那么那样。如果完成了这个操作，那么他会自动完成那个操作。例如：茶杯放在饮水机下，饮水机检测到有茶杯，这就是 this。水自己会流下来，填满茶杯。这是 that。如果检测到有茶杯，饮水机就会放水。
+
+![](https://cdn.yikzero.com/markdown/images/202311081023660.png)
+
+- 我们今天要实现 **如果检测到工大官网更新了通知，那么就以 邮件 的形式发送给我们这个新的通知标题及内容。**
+- 单击 this，找到 RSS Feed
+    
+![](https://cdn.yikzero.com/markdown/images/202311081027922.png)
+    
+- 选择 New feed item ，在 Feed URL 中填入：**https://rsshub.app/zjut/1**，点击 Create trigger 。完成 this 的操作
+    
+![](https://cdn.yikzero.com/markdown/images/202311081029853.png)
+    
+- 同理，在 that 中搜索 email ，先根据提示绑定自己的邮箱,以后官网通知都会发到这个邮箱。
+- 这里不用修改，直接 Create action ，然后 Finish
+    
+![](https://cdn.yikzero.com/markdown/images/202311081029804.png)
+    
+💡 这就实现了官网通知更新推送到你的邮箱，由于网站原因，可能存在十几分钟的延迟，请多理解。
+
+---
+
+## 推送至微信
+
+推送至微信难度稍微高一些，如果想自己配置的，可以继续看下去。如果不想自己配置，可以扫描下方二维码关注公众号就能够收到学校官网更新通知，以后会增加学院网站通知。
+
+![](https://cdn.yikzero.com/markdown/images/20231108112204.png)
+
+推送 RSS 更新到微信用到了[WxPusher](http://wxpusher.zjiecode.com/docs/#/)和[IFTTT](https://ifttt.com/)。配合 Webhook 实现的功能。
+
+> WxPusher (微信推送服务)是一个使用微信公众号作为通道的，实时信息推送平台，你可以通过调用 API 的方式，把信息推送到微信上，无需安装额外的软件，即可做到信息实时通知。 你可以使用 WxPusher 来做服务器报警通知、抢课通知、抢票通知，信息更新提示等。
+
+**1.** 点击地址，微信扫描关注并登录[WxPusher 后台](http://wxpusher.zjiecode.com/admin)
+
+**2.** 首先创建一个应用,记得保存 APP_TOKEN
+
+![](https://cdn.yikzero.com/markdown/images/202311081031936.png)
+
+![](https://cdn.yikzero.com/markdown/images/202311081031070.png)
+
+```plain
+APP_TOKEN：AT_iFym3l0dClijYPJk16AMjcjfPcazj8Ne   #每个人获取到的APP_TOKEN都不一样，请勿复制我的
+```
+
+**3.** 创建一个主题
+
+![](https://cdn.yikzero.com/markdown/images/202311081124096.png)
+
+记住刚刚创建的主题 ID
+
+![](https://cdn.yikzero.com/markdown/images/202311081125242.png)
+
+**4.** 点击关注，出现二维码，微信扫描二维码关注主题
+
+![](https://cdn.yikzero.com/markdown/images/202311081126488.png)
+
+**5.** 通过 GET 接口测试功能能否正常使用
+
+- `GET`接口是对`POST`接口的阉割，主要是为了某些情况下调用方便，只支持对文字（`contentType=1`）的发送，举例：
+
+```plain
+http://wxpusher.zjiecode.com/api/send/message/?appToken=AT_iFym3l0dClijYPJk16AMjcjfPcazj8Ne&content=Zero测试&topicId=608&url=https://example.com
+请求参数：appToken、uid、topicId、content、url ，其中 content 和 url 请进行 urlEncode 编码。
+```
+
+```plain
+appToken：AT_iFym3l0dClijYPJk16AMjcjfPcazj8Ne
+topicId：608         #即主题ID
+```
+
+按照你的`appToken`与`topicId`修改上方地址。`Content=`后填写推送内容，`url`如果不需要可以选择删除`&url=https://example.com`
+
+修改完毕后，将地址粘贴到浏览器地址栏
+
+![](https://cdn.yikzero.com/markdown/images/202311081127922.png)
+
+如果失败也是有提示哪里出错了，按照提示修改一下即可这时，不出意外的话，你的微信能收到你刚刚发送的信息。
+
+![](https://cdn.yikzero.com/markdown/images/202311081128088.jpg)
+
+到这里，`WxPusher`部分配置完毕
+
+---
+
+**6.** 创建 IFTTT 新项目, this 部分仍然选择 RSS，具体请查看 IFTTT 推送到邮件部分
+
+![](https://cdn.yikzero.com/markdown/images/202311081129746.png)
+
+that 部分选择 Webhooks 可按图进行配置。
+
+![](https://cdn.yikzero.com/markdown/images/202311081129811.png)
+
+```plain
+http://wxpusher.zjiecode.com/api/send/message     #URL
+POST   #Method
+application/json   #Content Type
+```
+
+Body 部分按照自己的实际情况与参数自行修改，完整参数请点击查看：[POST 完整使用方法](http://wxpusher.zjiecode.com/docs/#/?id=http%e8%b0%83%e7%94%a8#/?id=http%e8%b0%83%e7%94%a8#/?id=http%e8%b0%83%e7%94%a8)
+
+我是这样配置的：
+
+```plain
+{
+  "appToken":"AT_iFym3l0dClijYPJk16AMjcjfPcazj8Ne",
+  "content":"浙江工业大学： {{EntryTitle}}",
+  "contentType":1,
+  "topicIds":[
+      608
+   ],
+   "url":"{{EntryUrl}}"
+    }
+```
+
+这其中用到了两个参数`{{EntryTitle}}`、`{{EntryUrl}}`，通过这两个参数，IFTTT 能从 RSS 中获取到新通知的标题与链接，最终实现学校官网通知更新推送到微信。
+
+通过 IFTTT 这个媒介，我们不仅仅能推送 RSS 更新到微信，也能推送通知到钉钉等一系列提供了 Webhook 功能的软件。
