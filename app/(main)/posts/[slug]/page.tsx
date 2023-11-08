@@ -23,7 +23,6 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   return {
     title: `${post.title}｜${BrogConfig.WEB_TITLE}`,
     description: post.description,
-    
   };
 }
 
@@ -32,5 +31,14 @@ export default function PostPage({ params }: { params: { slug: string } }) {
   if (!post) {
     notFound();
   }
-  return <Post post={post} />;
+
+  const sortedPosts = allPosts.sort(
+    (a, b) =>
+      new Date(a.publishedAt).getTime() - new Date(b.publishedAt).getTime()
+  );
+  const currentIndex = sortedPosts.findIndex((p) => p.url === post.url);
+  const prevPost = sortedPosts[currentIndex + 1] || null;
+  const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
+
+  return <Post post={post} prevPost={prevPost} nextPost={nextPost} />;
 }

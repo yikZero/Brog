@@ -2,10 +2,11 @@ import { Post } from "contentlayer/generated";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import DateFormatter from "@/utils/DateFormatter";
 import PostNotice from "../PostNotice";
+import EntryNavigation from "./EntryNavigation";
 
 import mdxComponents from "./mdxComponents";
 
-export default async function PostPage({ post }: { post: Post }) {
+export default async function PostPage({ post, prevPost, nextPost }: { post: Post, prevPost: Post | null, nextPost: Post | null }) {
   const MDXContent = useMDXComponent(post.body.code);
 
   return (
@@ -32,6 +33,7 @@ export default async function PostPage({ post }: { post: Post }) {
       <section className="pt-8">
         <PostNotice date={post.publishedAt}/>
         <MDXContent components={mdxComponents} />
+        <EntryNavigation prevPost={prevPost} nextPost={nextPost} />
       </section>
     </main>
   );
