@@ -1,6 +1,7 @@
 import { Post } from "contentlayer/generated";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import DateFormatter from "@/utils/DateFormatter";
+import PostNotice from "../PostNotice";
 
 import mdxComponents from "./mdxComponents";
 
@@ -29,6 +30,7 @@ export default async function PostPage({ post }: { post: Post }) {
         </div>
       </section>
       <section className="pt-8">
+        <PostNotice date={post.publishedAt}/>
         <MDXContent components={mdxComponents} />
       </section>
     </main>
