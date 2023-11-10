@@ -15,7 +15,7 @@ const mdxComponents: MDXComponents = {
   ),
   pre: (props) => (
     <pre
-      className="border-gray-400 dark:bg-gray-900 border dark:border-gray-800"
+      className="dark:bg-gray-900 drop-shadow"
       {...props}
     ></pre>
   ),

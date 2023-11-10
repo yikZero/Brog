@@ -25,7 +25,7 @@ export default function EntryNavigation({
               <ChevronLeft className="w-4 h-4 group-hover:text-blue-600 group-hover:dark:blue-500" />
             </div>
             <div className="flex flex-col">
-              <div className="text-xs text-gray-400 dark:text-gray-600 pb-2">
+              <div className="text-xs text-gray-400 dark:text-gray-500 pb-2">
                 上一篇
               </div>
               <div className="text-sm font-medium text-gray-700 dark:text-gray-400 group-hover:text-blue-600 group-hover:dark:blue-500 line-clamp-1">
@@ -41,7 +41,7 @@ export default function EntryNavigation({
             className="group no-underline flex flex-row justify-end items-end gap-1 w-full"
           >
             <div className="flex flex-col items-start">
-              <div className="text-xs text-gray-400 dark:text-gray-600 pb-2">
+              <div className="text-xs text-gray-400 dark:text-gray-500 pb-2">
                 下一篇
               </div>
               <div className="text-sm font-medium text-gray-700 dark:text-gray-400 group-hover:text-blue-600 group-hover:dark:blue-500 line-clamp-1">
