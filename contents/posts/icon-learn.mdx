@@ -1,0 +1,57 @@
+---
+title: "UI 设计模块化研究：图标篇"
+description: 深入探索 UI 设计的理论与实践，提高设计知识与技能
+categories: [UI, Icon]
+publishedAt: 2023-11-11
+---
+
+## 背景
+
+现有高质量图标库很多，例如 [Untitled](https://www.untitledui.com/icons)、[Lucide](https://lucide.dev/icons/)、[Remix](https://remixicon.com/)，更加全的也可以参考 [React Icons](https://react-icons.github.io/react-icons)、[Iconfont](https://www.iconfont.cn/)。
+
+虽现有图标库这么多，但如果只是会根据含义选取图标的话...不是设计师的话，也可以做到。
+
+不能「只知其然而不知其所以然」，那便从图标开始，了解设计背后的理论。
+
+## 概述
+
+UI 设计领域中，图标扮演着核心角色。它们将文字信息转化为视觉符号，简化用户对内容的理解，并增强界面的美观性。特别是在 B 端设计上，尽管图标的使用不如 C 端频繁、复杂，但在以表单为主的页面布局中，恰当合适的图标设计能够突显出产品甚至整个企业的风格和品牌调性。
+
+最早的视觉传达方式基本上是通过图形进行的。这是北美印第安人在史前的岩洞壁画，虽然壁画都说是文字的前身，但个人感觉跟图标也很像。图标更像是一种通用语言，跨越了简体中文、英语、韩语等各种语言。
+
+![北美印第安人史前岩洞壁画](https://cdn.yikzero.com/markdown/images/202311112055138.png)
+
+## 图标中的道道
+
+首先，图标应清晰地表示物体、操作或创意。若用户无法查看/理解其含义，图标便成为华而不实的装饰，甚至阻碍任务完成。
+
+### 图标尺寸
+
+其实在使用各种组件库的时候，我便发现，这些库的图标都是基于 `24px` 尺寸。
+
+![Untitled UI Icons](https://cdn.yikzero.com/markdown/images/202311112139365.png)
+
+我发现了三点可能的理由：
+
+- 符合 8pt 网格系统
+- 24dp x 24dp @x1 是 [Material Design 3](https://m3.material.io/styles/icons/applying-icons#661945dc-8621-41c6-b88d-bdb7c945b4e7) 规范推荐的图标「完美尺寸」。同时，Material Design 推荐最小触控区域 48dp。
+- Apple 推荐最小触控区域 44pt，图标为 24pt。
+
+暂未找到背后的数据支撑，且按照约定俗成的规矩来应用：
+
+![图标尺寸](https://cdn.yikzero.com/markdown/images/202311112329467.png)
+
+- 图标尺寸推荐为 24px x 24px，上下左右各留出 2px 内边距（不绝对，具体边距根据 Keyline 判断）。触控区域相对应为 48px x 48px
+- 在桌面端时，图标大小可缩小至 20px x 20px，触控区域相对应为 40px x 40px。
+
+「规矩是死的，人是活的」。我们可根据该指导原则，同时结合实际情况来应用，例：面性图标可识别性更高，图标最小尺寸也可相对小一些。
+
+## 参考内容
+
+- [Intro to The 8-Point Grid System](https://medium.com/built-to-adapt/intro-to-the-8-point-grid-system-d2573cde8632#.5h95d066j)
+- [Apple - Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines)
+- [Material Design 3](https://m3.material.io/)
+- [Ant Design 5](https://ant.design/index-cn/)
+- [Fluent 2](https://fluent2.microsoft.design/#/)
+- [Airnb Design](https://airbnb.design/)
+- [IBM Carbon Design System](https://carbondesignsystem.com/)
