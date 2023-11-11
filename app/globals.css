@@ -35,4 +35,8 @@
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-gray-500 dark:bg-gray-500;
   }
+  
+  :not(pre) > code {
+    @apply text-sm inline-block text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded py-0.5 px-1 m-0;
+  }
 }

@@ -23,9 +23,11 @@ publishedAt: 2020-02-09
 
 该作者提供的脚本里，邮件什么的都是填上就好，但是我当时`sendmail`命令出现了一些问题，然后就跟着第一部分的记录走了，一些脚本的东西，我已经写入服务器了，所以，改了很多原来脚本的东西。
 
-我用作者的脚本调试的时候`aria2.log`中一直会出现 `no such file or directory`这个问题 但是找不到原因所在。然后我就想全部脚本都用`管道`来写。。好像有点笨。。但不会其他方法了。 [collapse status=“false” title=" email.sh "] echo "
+我用作者的脚本调试的时候`aria2.log`中一直会出现 `no such file or directory`这个问题 但是找不到原因所在。然后我就想全部脚本都用`管道`来写。。好像有点笨。。但不会其他方法了。
 
-```jsx
+```shell
+echo "
+
 文件路径：$3
 
 完成时间 `date +%Y/%m/%d`  `date +%T`
@@ -57,7 +59,7 @@ Have a nice day." | mail -s 'Aria2通知' example@qq.com
 
 具体写法：
 
-```jsx
+```shell
 . /root/.aria2/email.sh
 ```
 

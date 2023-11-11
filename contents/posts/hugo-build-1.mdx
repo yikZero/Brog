@@ -49,7 +49,7 @@ brew install hugo
 
 任何格式都支持 Strings，但 JSON 不支持多行字符串，还不支持注释。
 
-```jsx
+```toml
 # TOML
 key = "String Value"
 multiline = """\
@@ -59,7 +59,7 @@ multiline = """\
        """
 ```
 
-```jsx
+```yaml
 # YAML
 key : String Value
 multilinePreservedLinebreaks:
@@ -73,7 +73,7 @@ multilineReplaceLinebreaksWithWhitespace:
   on the same line.
 ```
 
-```jsx
+```json
 // JSON
 {
   "key" : "String Value"
@@ -82,60 +82,53 @@ multilineReplaceLinebreaksWithWhitespace:
 
 由于`JSON`较为麻烦的注释形式，`YAML`严格的缩进形式，我最终选择`TOML`作为配置文件格式，我也可以自由进行缩进，方便我查看。
 
-- 参考资料
-    
-    [JSON vs. YAML vs. TOML](https://martin-ueding.de/posts/json-vs-yaml-vs-toml/)
-    
-    [深入对比 TOML，JSON 和 YAML](https://www.cnblogs.com/sunsky303/p/9208848.html)
+### 参考资料
+- [JSON vs. YAML vs. TOML](https://martin-ueding.de/posts/json-vs-yaml-vs-toml/)
+- [深入对比 TOML，JSON 和 YAML](https://www.cnblogs.com/sunsky303/p/9208848.html)
     
 
 ## 零零散散的知识点
 
-1. `:=` **的含义**
-    1. 此符号`:=`是 Python 语言中的赋值运算符(主要称为海象运算符)，海象操作符压缩了我们的代码以使其更短。
+1. 此符号`:=`是 Python 语言中的赋值运算符(主要称为海象运算符)，海象操作符压缩了我们的代码以使其更短。
     
-    ```jsx
-    var a; //定义
-    a = 1; //赋值
-    ```
+```jsx
+var a; //定义
+a = 1; //赋值
+```
     
-2. `layout/baseof.html`是所有页面的基础
-3. `layout/partials`文件夹中可以分部分`header` 、`footer`等
+2. `layout/baseof.html` 是所有页面的基础
+3. `layout/partials` 文件夹中可以分部分 `header` 、`footer`等
 4. 新增页面步骤：
-    1. 需要在`content`中添加一个`.md`文件
-    2. `layouts/_default`中增加同名页面
-5. 菜单激活`active`状态代码：
-    1. 根据官网[说明](https://gohugo.io/templates/menu-templates/#readout)的方式并不能成功添加`active`状态，因此寻找了其他方式来判断`active`
+  1. 需要在 `content` 中添加一个 `.md` 文件
+  2. `layouts/_default` 中增加同名页面
+5. 菜单激活 `active` 状态代码：
+  1. 根据官网[说明](https://gohugo.io/templates/menu-templates/#readout)的方式并不能成功添加 `active` 状态，因此寻找了其他方式来判断 `active`
     
-    ```jsx
-    {{ range .Site.Menus.main }}
-          {{- $menu_item_url := (cond (strings.HasSuffix .URL "/") .URL (printf "%s/" .URL) ) | absLangURL }}
-          {{- $page_url:= $currentPage.Permalink | absLangURL }}
-            <li>
-                <a {{- if eq $menu_item_url $page_url }} class="active" {{- end }} href="{{ .URL }}">
-                    {{ .Pre }}
-                    <span>{{ .Name }}</span>
-                </a>
-            </li>
-          {{ end }}
-    ```
+```jsx
+{{ range .Site.Menus.main }}
+      {{- $menu_item_url := (cond (strings.HasSuffix .URL "/") .URL (printf "%s/" .URL) ) | absLangURL }}
+      {{- $page_url:= $currentPage.Permalink | absLangURL }}
+        <li>
+            <a {{- if eq $menu_item_url $page_url }} class="active" {{- end }} href="{{ .URL }}">
+                {{ .Pre }}
+                <span>{{ .Name }}</span>
+            </a>
+        </li>
+      {{ end }}
+```
     
-6. css 中`position`功能小知识点！
+6. css 中 `position` 功能小知识点！
     
-    ```jsx
-    .outer{
-    	position: relative;
-    }
+```css
+.outer{
+  position: relative;
+}
+
+.inner{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+```
     
-    .inner{
-    	position: absolute;
-    	top: 0px;
-    	left: 0px;
-    }
-    ```
-    
-7. `Shortcode`可以简短代码，写一些方法。类似`function`
-    
-    具体参照写法： https://www.letswrite.tw/hugo-basic/
-    
-8. Svg 更换颜色
+7. `Shortcode` 可以简短代码，写一些方法。类似 `function` ，具体参照写法：[Hugo-basic](https://www.letswrite.tw/hugo-basic/)

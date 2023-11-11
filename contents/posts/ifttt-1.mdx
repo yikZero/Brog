@@ -17,7 +17,7 @@ publishedAt: 2021-10-14
 
 **我以我们学校的订阅来演示：**
 
-```jsx
+```html
 1. 在RssHub中中找到我们学校的订阅地址：   #路径：路由-大学通知-浙江工业大学
 https://docs.rsshub.app/university.html#zhe-jiang-gong-ye-da-xue
 
@@ -72,7 +72,7 @@ https://rsshub.app/zjut/1   #如果需要每周会议的RSS订阅地址，那么
 
 ![](https://cdn.yikzero.com/markdown/images/202311081031070.png)
 
-```plain
+```html
 APP_TOKEN：AT_iFym3l0dClijYPJk16AMjcjfPcazj8Ne   #每个人获取到的APP_TOKEN都不一样，请勿复制我的
 ```
 
@@ -92,12 +92,12 @@ APP_TOKEN：AT_iFym3l0dClijYPJk16AMjcjfPcazj8Ne   #每个人获取到的APP_TOKE
 
 - `GET`接口是对`POST`接口的阉割，主要是为了某些情况下调用方便，只支持对文字（`contentType=1`）的发送，举例：
 
-```plain
+```html
 http://wxpusher.zjiecode.com/api/send/message/?appToken=AT_iFym3l0dClijYPJk16AMjcjfPcazj8Ne&content=Zero测试&topicId=608&url=https://example.com
 请求参数：appToken、uid、topicId、content、url ，其中 content 和 url 请进行 urlEncode 编码。
 ```
 
-```plain
+```html
 appToken：AT_iFym3l0dClijYPJk16AMjcjfPcazj8Ne
 topicId：608         #即主题ID
 ```
@@ -124,7 +124,7 @@ that 部分选择 Webhooks 可按图进行配置。
 
 ![](https://cdn.yikzero.com/markdown/images/202311081129811.png)
 
-```plain
+```html
 http://wxpusher.zjiecode.com/api/send/message     #URL
 POST   #Method
 application/json   #Content Type
@@ -134,7 +134,7 @@ Body 部分按照自己的实际情况与参数自行修改，完整参数请点
 
 我是这样配置的：
 
-```plain
+```json
 {
   "appToken":"AT_iFym3l0dClijYPJk16AMjcjfPcazj8Ne",
   "content":"浙江工业大学： {{EntryTitle}}",
