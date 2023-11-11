@@ -11,6 +11,7 @@ function clsx(...args: any) {
 const mdxComponents: MDXComponents = {
   a: ({ className, ...props }) => (
     <Link
+      target="_blank"
       rel="noopener noreferrer"
       className={clsx(
         "hover:text-blue-600 dark:hover:text-blue-500 transition ease-in-out duration-300",
