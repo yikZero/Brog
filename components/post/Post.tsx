@@ -6,13 +6,21 @@ import EntryNavigation from "./EntryNavigation";
 
 import mdxComponents from "./mdxComponents";
 
-export default async function PostPage({ post, prevPost, nextPost }: { post: Post, prevPost: Post | null, nextPost: Post | null }) {
+export default async function PostPage({
+  post,
+  prevPost,
+  nextPost,
+}: {
+  post: Post;
+  prevPost: Post | null;
+  nextPost: Post | null;
+}) {
   const MDXContent = useMDXComponent(post.body.code);
 
   return (
     <main className="prose dark:prose-invert">
       <section className="flex flex-col border-b border-gray-200 dark:border-gray-800">
-        <h1 className="leading-tight mb-2">{post.title}</h1>
+        <h1 className="leading-tight mb-3 text-[2rem]">{post.title}</h1>
         <div className="flex flex-row gap-4 mb-4 prose-sm select-none">
           <div>
             <DateFormatter date={post.publishedAt} />
@@ -20,18 +28,14 @@ export default async function PostPage({ post, prevPost, nextPost }: { post: Pos
           {post.categories && (
             <div className="flex flex-row gap-2">
               {post.categories.map((category) => (
-                <div
-                  key={category}
-                >
-                  #{category}
-                </div>
+                <div key={category}>#{category}</div>
               ))}
             </div>
           )}
         </div>
       </section>
-      <section className="pt-8">
-        <PostNotice date={post.publishedAt}/>
+      <section className="pt-8 sm:text-[0.9375rem] text-base">
+        <PostNotice date={post.publishedAt} />
         <MDXContent components={mdxComponents} />
         <EntryNavigation prevPost={prevPost} nextPost={nextPost} />
       </section>

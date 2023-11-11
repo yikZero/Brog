@@ -14,7 +14,7 @@ const mdxComponents: MDXComponents = {
       target="_blank"
       rel="noopener noreferrer"
       className={clsx(
-        "hover:text-blue-600 dark:hover:text-blue-500 transition ease-in-out duration-300",
+        "not-prose text-blue-600 dark:text-blue-500 hover:underline hover:text-blue-500 dark:hover:text-blue-400 transition ease-in-out duration-300",
         className
       )}
       {...props}
@@ -36,7 +36,7 @@ const mdxComponents: MDXComponents = {
       placeholder="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAArwAAAGQAQMAAAB28iHQAAAAA1BMVEXt7e0zK21NAAAAOElEQVR42u3BAQEAAACCoP6vbojAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEg7ixAAAXqv4zAAAAAASUVORK5CYII="
       {...props}
     />
-  ),
+  )
 };
 
 export default mdxComponents;
