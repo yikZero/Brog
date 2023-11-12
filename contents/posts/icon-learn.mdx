@@ -7,9 +7,9 @@ publishedAt: 2023-11-11
 
 ## 背景
 
-现有高质量图标库很多，例如 [Untitled](https://www.untitledui.com/icons)、[Lucide](https://lucide.dev/icons/)、[Remix](https://remixicon.com/)，更加全的也可以参考 [React Icons](https://react-icons.github.io/react-icons)、[Iconfont](https://www.iconfont.cn/)。
+现有高质量图标库很多，例如 [Untitled](https://www.untitledui.com/icons)、[Lucide](https://lucide.dev/icons/)、[Remix](https://remixicon.com/)，更加全面的也可以参考 [React Icons](https://react-icons.github.io/react-icons)、[Iconfont](https://www.iconfont.cn/)。
 
-虽现有图标库这么多，但如果只是会根据含义选取图标的话...不是设计师的话，也可以做到。
+虽现有图标库这么多，但如果只是会根据含义选取图标的话...不是设计师，也可以做到。
 
 不能「只知其然而不知其所以然」，那便从图标开始，了解设计背后的理论。
 
@@ -29,22 +29,60 @@ UI 设计领域中，图标扮演着核心角色。它们将文字信息转化�
 
 其实在使用各种组件库的时候，我便发现，这些库的图标都是基于 `24px` 尺寸。
 
-![Untitled UI Icons](https://cdn.yikzero.com/markdown/images/202311112139365.png)
+![Untitled UI Icons](https://cdn.yikzero.com/markdown/images/202311121908492.png)
 
-我发现了三点可能的理由：
+找遍了网上资料，我发现了其可能的理由：
 
-- 符合 8pt 网格系统
-- 24dp x 24dp @x1 是 [Material Design 3](https://m3.material.io/styles/icons/applying-icons#661945dc-8621-41c6-b88d-bdb7c945b4e7) 规范推荐的图标「完美尺寸」。同时，Material Design 推荐最小触控区域 48dp。
-- Apple 推荐最小触控区域 44pt，图标为 24pt。
+- 24px 尺寸确保图标在各种屏幕分辨率和设备上都保持清晰和易读。
+- 24px 尺寸适应多种网格系统（例 [8-Point Grid System](https://medium.com/built-to-adapt/intro-to-the-8-point-grid-system-d2573cde8632#.5h95d066j)），便于设计师和开发者合作。
+- 24dp * 24dp @x1 是 [Material Design 3](https://m3.material.io/styles/icons/applying-icons#661945dc-8621-41c6-b88d-bdb7c945b4e7) 规范推荐的图标「完美尺寸」。同时，Material Design 推荐最小触控区域 48dp。
 
-暂未找到背后的数据支撑，且按照约定俗成的规矩来应用：
+暂未找到背后的数据支撑，且按照约定俗成来应用：
 
 ![图标尺寸](https://cdn.yikzero.com/markdown/images/202311112329467.png)
 
-- 图标尺寸推荐为 24px x 24px，上下左右各留出 2px 内边距（不绝对，具体边距根据 Keyline 判断）。触控区域相对应为 48px x 48px
-- 在桌面端时，图标大小可缩小至 20px x 20px，触控区域相对应为 40px x 40px。
+- 推荐的标准图标尺寸为 24px * 24px，通常周围留有 2px 的内边距，但这不是绝对的，具体边距应根据 Keyline 判断。相应的推荐触控区域尺寸为 48px * 48px。
+- 在桌面环境中，图标大小可以调整为 20px * 20px，对应的触控区域建议为 40px * 40px。
+- 16px 通常作为最小尺寸，在该尺寸下，图标应设计得更为简洁，此时其装饰性作用会更大于功能性。
 
-「规矩是死的，人是活的」。我们可根据该指导原则，同时结合实际情况来应用，例：面性图标可识别性更高，图标最小尺寸也可相对小一些。
+「规矩是死的，人是活的」。我们可根据该指导原则，同时结合实际情况来应用。
+
+px 与 dp 、pt 并不相等，其相互之间有自己的换算关系，具体可网上寻找资料。
+
+### 图标样式
+
+现有的图标样式纷繁复杂，早就不局限于线性、面性了。C 端的图标是更加的百花齐放。在这里我们暂且基于基础样式进行分析。
+
+下面是我寻找到的 Untitled Icons 的图标样式：Line（线性）、Duocolor（线性多色）、Duotone（面性多色）、Solid（面性）。
+
+![各种图标样式示例](https://cdn.yikzero.com/markdown/images/202311122131581.png)
+
+以上四种图标样式，基本能够满足 B 端设计所有的需求了。
+
+如果按照更加细致的分法，Material Design 还将「线性图标」分成了：OutLine（轮廓）、Rounded（圆角）、Sharp（锐利）。
+
+![Material Design 图标风格](https://cdn.yikzero.com/markdown/images/202311122203904.png)
+
+再加上线性图标的描边（Stroke）粗细、圆角（Radius）大小，这基本就能够满足企业、产品性格的定制化需求了。
+
+另外，图标的风格不仅影响整体界面风格，还会影响图标的功能性和用户体验：
+
+- 复杂的图标就不适合过小的尺寸（16px * 16px 的图标需要更加简洁的线性样式）
+- 面性图标整体上会比线性图标更容易识别，但具体需根据图标形状判断 [结论来源](https://cdr.lib.unc.edu/concern/masters_papers/6w924g35w)
+
+## 图标设计
+
+首先我想说，我从来就没有完全独立的设计过一个图标。以往如果没有满足需求的图标，我基本也是拿个类似含义的图标，然后简单调整一下其形状。
+
+故，借着这个机会，我也可以接触一下图标的设计。Ant design 的[图标设计指引](https://ant.design/docs/spec/icon-cn)其实已经写了很多相关内容了，推荐先了解一下。
+
+### Keyline 的使用
+
+Keyline 是网格的基础。通过使用这些核心形状作为指导，我们可以在系统图标之间保持一致的视觉比​​例。
+
+![Keyline 示范](https://cdn.yikzero.com/markdown/images/202311122358540.png)
+
+## 图标应用
 
 ## 参考内容
 
