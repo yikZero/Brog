@@ -126,23 +126,98 @@ JPG / PNG 格式的图片属于最保险的展示方式，所有浏览器都支�
 
 ![iconfont 图标](https://cdn.yikzero.com/markdown/images/202311132044218.png)
 
-图标字体直到我写这篇文章的时候，应用的也还是挺广泛的。但我个人不喜欢这种方式，主要有以下三点原因：
+字体图标直到我写这篇文章的时候，应用的也还是挺广泛的，调用方便、占用较少。但主要有以下几个缺点影响着字体图标的使用：
 
-- 图标需要设计师一个个处理。部分图标轮廓化之后还不够，还需要通过 Figma [Fill Rule Editor](https://www.figma.com/community/plugin/771155994770327940/fill-rule-editor) 插件，将图标填充模式调整成「Non-zero rule」才能够正常展示在 iconfont 中。
-- 图标字体对于多色图标的支持程度不够，自定义程度不够高。
-- 图标字体还存在无法正常渲染的情况，还需要特殊处理（我曾天真以为是我浏览器的问题）。
+- 图标需要设计师一个个处理。部分图标轮廓化之后还不够，还需要通过 Figma [Fill Rule Editor](https://www.figma.com/community/plugin/771155994770327940/fill-rule-editor) 插件，将图标填充模式调整成「Non-zero rule」才能够正常展示在 iconfont 中。 具体方案可[参照](https://zhuanlan.zhihu.com/p/137298478)
+  - 如果通过 Fill Rule Editor 调整填充样式时，发生了图标消失事件，可以尝试将图标原封不动的复制到 illustrator / Sketch ，然后复制回来即可解决该问题。（误
+- 字体图标对于多色图标的支持程度不够，自定义程度不够高。
+- 字体图标还存在无法正常渲染的情况，还需要特殊处理（我曾天真以为是我浏览器的问题）。
+
+字体样式图标我只能从设计师的角度来评价，因为我没有在开发时应用过该方式。推荐文章 [Icon Fonts vs SVG Icons: What Works Best for You?](https://getdevdone.com/blog/icon-fonts-vs-svg-icons.html)，里面比较详细的对比了字体与 SVG 优缺点。
 
 ### SVG 方式
 
+SVG 图标不仅继承了字体图标的主要优势，还解决了字体图标的一些局限性，其主要优点包括：
 
+- 支持每个图标拥有多种颜色，包括渐变。
+- 支持更加复杂的图形和形状，其不限于字体的基本形状。
+- 支持直接嵌入 HTML 代码中，方便编辑、控制图标。
+- 支持 CSS 和 JavaScript 动画
+
+iconfont 也不仅仅只支持字体图标的方式，官方几年前也已经支持通过 symbol 方式来引用 SVG 图标。
+
+我们可以通过一个例子来简单了解 SVG。以下是一个在 Figma 中导出的 SVG 格式的「主页」图标，其代码如下：
+
+```html
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M15 21V13C15 12.4477 14.5523 12 14 12H10C9.44772 12 9 12.4477 9 13V21M15 21H20C20.5523 21 21 20.5523 21 20V9.48908C21 9.18049 20.8575 8.88919 20.6139 8.69973L12.6139 2.47751C12.2528 2.19665 11.7472 2.19665 11.3861 2.47751L3.38606 8.69973C3.14247 8.88919 3 9.18049 3 9.48908V20C3 20.5523 3.44772 21 4 21H9M15 21H9" stroke="black" stroke-width="2"/>
+</svg>
+```
+
+这个 SVG 包含几个关键属性：
+
+- **path：** path 元素定义了图形的轮廓，通过一系列命令和参数描述路径上的点，形成图形。在这个例子中，这些命令和参数共同构成了一个房子的形状。
+- **fill：** fill 属性用于设置图形的内部颜色。它可以是16进制的颜色代码（例如 #FF0000），也可以是常见的颜色名称（例如 `black` ）。none 表示没有填充，而 currentColor 使用元素或其父元素的 color 属性值。
+- **stroke：** stroke 属性用于定义图形轮廓的颜色，使用方式与 fill 相似。
+- **stroke-width：** stroke-width 属性指定描边的宽度。
+
+如果 SVG 包含多个路径，会有多个 path 元素。每个 path 可以有独立的 fill 和 stroke 属性，控制各自的填充和描边样式。如果某个图形部分不需要描边，可以将其 stroke 属性设置为 none 。
+
+![Remix 平台 图标展示](https://cdn.yikzero.com/markdown/images/202311142114226.png)
+
+如上图所示，我们看到的是一个图标的预览和对应的代码。仔细观察，你会注意到代码中并未指定图标的宽度、高度、填充色和描边色。
+
+这种做法旨在提供尽可能简洁的 SVG 图标代码，仅包含图标路径等核心信息。这样设计的目的是允许前端开发者更灵活地控制图标的颜色和尺寸。例如，如果 SVG 图标代码中默认包含了 `fill` 属性，前端开发者在应用这些图标时可能会发现无法改变其颜色。为解决这一问题，一种方法是移除 `fill` 属性，或将 `fill` 设为 `currentColor` ，然后通过CSS来定义颜色。另一种方法是直接在 `fill` 属性中指定所需颜色。
+
+不建议使用诸如 filter 这样的 Hack 方法来调整颜色，因为这种方法可能既复杂又不精确。
+
+同样，SVG图标支持压缩，可以使用工具如 [SVGO](https://github.com/svg/svgo) 清理 SVG 代码中的冗余部分。
+
+对于前端调用SVG的实践，可以参考下面的示例，其中使用了 Tailwindcss 和 Lucide Icons ：
+
+**直接调用示例**
+
+这段代码示例展示了如何使用简单的类控制图标的尺寸、颜色以及暗黑模式下的显示效果。操作非常直观方便：
+
+```tsx
+<div className="Container">
+  <svg className="w-5 h-5 stroke-blue-500 hover:stroke-blue-600 dark:stroke-blue-400 dark:hover:stroke-blue-500" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M15 21V13C15 12.4477 14.5523 12 14 12H10C9.44772 12 9 12.4477 9 13V21M15 21H20C20.5523 21 21 20.5523 21 20V9.48908C21 9.18049 20.8575 8.88919 20.6139 8.69973L12.6139 2.47751C12.2528 2.19665 11.7472 2.19665 11.3861 2.47751L3.38606 8.69973C3.14247 8.88919 3 9.18049 3 9.48908V20C3 20.5523 3.44772 21 4 21H9M15 21H9"/>
+  </svg>
+</div>
+```
+
+**软件包应用示例**
+
+以下示例展示了如何通过软件包来应用图标，这种方式同样简单，只需引入所需图标并设置样式：
+
+```tsx
+import { Home } from "lucide-react";
+
+const App = () => {
+  return (
+    <Home className="w-5 h-5 stroke-blue-500 hover:stroke-blue-600 dark:stroke-blue-400 dark:hover:stroke-blue-500" />
+  );
+};
+
+export default App;
+```
+
+要将设计图标交付给开发团队，你可以选用 iconfont 或使用 [figma-icon-automation](https://github.com/leadream/figma-icon-automation) 插件打包图标为 npm 库，便于开发团队通过安装包调用。此方法配置一次即可，效率高。
+
+SVG 图标应用方式虽然涉及到代码，但是该部分介绍也还是为设计师准备的。目的只想告诉大家，SVG 不存在不好调整色彩的问题，也不存在不好调用的问题。积极推动开发跟进吧～
+
+## 结束语
+
+这个微小的图标背后隐藏着丰富而复杂的内容，而本文仅仅是对这一广阔主题的初步探索。作为一个初学者，我在文章中的错误在所难免，我诚挚地欢迎读者提出宝贵的意见和指正。
 
 ## 参考内容
 
+- [Material Design 3](https://m3.material.io/)
+- [Icon Fonts vs SVG Icons: What Works Best for You?](https://getdevdone.com/blog/icon-fonts-vs-svg-icons.html)
 - [Design Icons from Scratch](https://blog.yarsalabs.com/guide-to-design-icons/)
 - [Intro to The 8-Point Grid System](https://medium.com/built-to-adapt/intro-to-the-8-point-grid-system-d2573cde8632#.5h95d066j)
 - [Apple - Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines)
-- [Material Design 3](https://m3.material.io/)
 - [Ant Design 5](https://ant.design/index-cn/)
-- [Fluent 2](https://fluent2.microsoft.design/#/)
-- [Airnb Design](https://airbnb.design/)
-- [IBM Carbon Design System](https://carbondesignsystem.com/)
+- [Lucide Icons](https://lucide.dev/)
+- [Remix Icons](https://remixicon.com/)
