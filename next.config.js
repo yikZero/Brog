@@ -1,44 +1,39 @@
+const { withContentlayer } = require("next-contentlayer");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    // 图片压缩
-    formats: ['image/avif', 'image/webp'],
-    // 允许next/image加载的图片 域名
+    // 允许next/image加载的图片域名
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'gravatar.com'
+        protocol: "https",
+        hostname: "*.yikzero.com",
       },
       {
-        protocol: 'https',
-        hostname: '*.yikzero.com'
+        protocol: "https",
+        hostname: "*.vercel.app",
       },
-      {
-        protocol: 'https',
-        hostname: '*.vercel.app'
-      },
-      {
-        protocol: 'https',
-        hostname: 'cdn.sanity.io',
-      },
-    ]
+    ],
   },
   async rewrites() {
     return [
       {
-        source: '/rss',
-        destination: '/feed.xml',
+        source: "/rss",
+        destination: "/feed.xml",
       },
       {
-        source: '/rss.xml',
-        destination: '/feed.xml',
+        source: "/rss.xml",
+        destination: "/feed.xml",
       },
       {
-        source: '/feed',
-        destination: '/feed.xml',
+        source: "/feed",
+        destination: "/feed.xml",
       },
-    ]
+    ];
   },
+  experimental: {
+    webpackBuildWorker: true
+},
 };
 
-module.exports = nextConfig
+module.exports = withContentlayer(nextConfig);

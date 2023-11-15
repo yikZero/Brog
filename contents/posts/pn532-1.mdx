@@ -1,0 +1,94 @@
+---
+title: PN532 模拟校园卡
+description: 利用 PN532 模拟校园卡，实现门卡、消费等功能
+categories: [PN532]
+publishedAt: 2021-10-3
+---
+
+## 前言
+
+前段时间发过一篇模拟校园卡的教程，但是那篇教程算是最基础，最简单的。但与此同时，也带来了一些问题。手机厂商为保证安全问题，手机 NFC 是不支持模拟加密卡的，即使能模拟加密卡，加密部分的功能也是不可用的（除非你 ROOT）。简而言之，校园卡中消费功能是不能够通过之前那篇教程模拟直接实现的。那怎么行呢！本来就是为了方便，消费功能实现不了？这怎么可以。因此我也便查阅了大量的资料，踩了一些坑，在大量的教程的支撑下，成功模拟了加密卡。
+
+**今天中午的时候，我去超市买了水，还挺好用的。**
+
+## 截图
+
+![](https://cdn.yikzero.com/markdown/images/202311081211243.jpg)
+
+## 前期准备
+
+- **[MifareOneTool 软件](https://github.com/xcicode/MifareOneTool/releases/latest)**
+- **PN532**
+- **支持 NFC 的手机**
+- **CUID 空白卡**
+- **校园卡**
+
+## 解原卡
+
+- PN532 连接电脑
+- 打开 MifareOne Tool
+
+按照步骤：
+
+1. 检测连接
+2. 扫描卡片 SAK 为 28 等不能解卡，我们学校的校园卡 SAK 为 08，支持解卡。
+    
+![](https://cdn.yikzero.com/markdown/images/202311081211470.png)
+    
+3. 检测加密
+4. **一键解原卡**
+    
+![](https://cdn.yikzero.com/markdown/images/202311081212853.png)
+    
+
+这一步我失败了很多很多次，花费了一上午才成功解出原卡数据，可以多试几次，我可能太非洲了。解出原卡数据后，会自己弹窗，指定文件名，保存原卡解卡数据。后缀名为.dump
+
+**这个时候，卡暂时用不到，可以先拿下来。**
+
+## 数据刷入 CUID 空白卡
+
+![](https://cdn.yikzero.com/markdown/images/202311081213335.png)
+
+MifareOne Fool 选择高级操作模式中的 Hex 编辑器
+
+![](https://cdn.yikzero.com/markdown/images/202311081215534.png)
+
+打开你刚刚保存的.dump 后缀的文件。
+
+![](https://cdn.yikzero.com/markdown/images/202311081216191.png)
+
+在扇区 0 第 0 块中复制前八位 这几位是卡 ID 也可记事本打开.dump 文件，在第一行复制前八位，不要空格。
+
+![](https://cdn.yikzero.com/markdown/images/202311081217856.png)
+
+选择新建，
+
+![](https://cdn.yikzero.com/markdown/images/202311081218941.png)
+
+新建后，在工具中选择修改 UID，输入你刚刚复制的八位卡 ID，然后保存，另存为.mfd 后缀文件。
+
+将 CUID 空白卡放在 PN532 上，按照扫描卡片，检测加密走一遍。
+
+![](https://cdn.yikzero.com/markdown/images/202311081219805.png)
+
+上面步骤完成后，选择写 C/FUID 卡，文件选取后缀为.mfd 的文件！ 注意一下。
+
+下面提示框中会提示写入 64/64 就完成了。 如果是 63/64，就再写一遍 CUID 卡。一般没问题。
+
+然后就可以用你的 NFC 手机模拟门卡功能模拟这张空白 CUID 卡了。 这个时候你要知道，这个时候你只模拟了卡 ID，加密部分还没有模拟呢。到这里并没有结束。
+
+## 加密写入手机
+
+💡 这一部分的工具是手机、PN532、MifareOne Tool,跟空白卡没有关系了。空白卡的使命已经完成了。
+
+![](https://cdn.yikzero.com/markdown/images/202311081220132.jpg)
+
+将手机打开 NF 功能，然后放置在 PN532 上。这时候，手机就被识别为一张 CUID 卡。
+
+![](https://cdn.yikzero.com/markdown/images/202311081220482.png)
+
+再次选择写 C/FUID 卡，这次文件选择.dump 后缀的，这个文件中才包含加密卡部分数据。提示框显示写入 63/64 即为成功，卡 ID 不会被再次读取，因此这 1/64 不会成功。
+
+恭喜，到这里。你的手机就已经可以实现校园卡的全部功能了。同理将第三部分教程中的手机换成手环也是相同的操作。
+
+![](https://cdn.yikzero.com/markdown/images/202311081221822.jpg)

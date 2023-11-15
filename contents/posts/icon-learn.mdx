@@ -1,0 +1,223 @@
+---
+title: "UI 设计模块化研究：图标篇"
+description: 深入探索 UI 设计的理论与实践，提高设计知识与技能
+categories: [UI, Icon]
+publishedAt: 2023-11-11
+---
+
+## 背景
+
+现有高质量图标库很多，例如 [Untitled](https://www.untitledui.com/icons)、[Lucide](https://lucide.dev/icons/)、[Remix](https://remixicon.com/)，更加全面的也可以参考 [React Icons](https://react-icons.github.io/react-icons)、[Iconfont](https://www.iconfont.cn/)。
+
+虽现有图标库这么多，但如果只是会根据含义选取图标的话...不是设计师，也可以做到。
+
+不能「只知其然而不知其所以然」，那便从图标开始，了解设计背后的理论。
+
+## 概述
+
+UI 设计领域中，图标扮演着核心角色。它们将文字信息转化为视觉符号，简化用户对内容的理解，并增强界面的美观性。特别是在 B 端设计上，尽管图标的使用不如 C 端频繁、复杂，但在以表单为主的页面布局中，恰当合适的图标设计能够突显出产品甚至整个企业的风格和品牌调性。
+
+最早的视觉传达方式基本上是通过图形进行的。这是北美印第安人在史前的岩洞壁画，虽然壁画都说是文字的前身，但个人感觉跟图标也很像。图标更像是一种通用语言，跨越了简体中文、英语、韩语等各种语言。
+
+![北美印第安人史前岩洞壁画](https://cdn.yikzero.com/markdown/images/202311112055138.png)
+
+## 图标中的道道
+
+首先，图标应清晰地表示物体、操作或创意。若用户无法查看/理解其含义，图标便成为华而不实的装饰，甚至阻碍任务完成。
+
+### 图标尺寸
+
+其实在使用各种组件库的时候，我便发现，这些库的图标都是基于 `24px` 尺寸。
+
+![Untitled UI Icons](https://cdn.yikzero.com/markdown/images/202311121908492.png)
+
+找遍了网上资料，我发现了其可能的理由：
+
+- 24px 尺寸确保图标在各种屏幕分辨率和设备上都保持清晰和易读。
+- 24px 尺寸适应多种网格系统（例 [8-Point Grid System](https://medium.com/built-to-adapt/intro-to-the-8-point-grid-system-d2573cde8632#.5h95d066j)），便于设计师和开发者合作。
+- 24dp * 24dp @x1 是 [Material Design 3](https://m3.material.io/styles/icons/applying-icons#661945dc-8621-41c6-b88d-bdb7c945b4e7) 规范推荐的图标「完美尺寸」。同时，Material Design 推荐最小触控区域 48dp。
+
+暂未找到背后的数据支撑，且按照约定俗成来应用：
+
+![图标尺寸](https://cdn.yikzero.com/markdown/images/202311112329467.png)
+
+- 推荐的标准图标尺寸为 24px * 24px，通常周围留有 2px 的内边距，但这不是绝对的，具体边距应根据 Keyline 判断。相应的推荐触控区域尺寸为 48px * 48px。
+- 在桌面环境中，图标大小可以调整为 20px * 20px，对应的触控区域建议为 40px * 40px。
+- 16px 通常作为最小尺寸，在该尺寸下，图标应设计得更为简洁，此时其装饰性作用会更大于功能性。
+
+「规矩是死的，人是活的」。我们可根据该指导原则，同时结合实际情况来应用。
+
+px 与 dp 、pt 并不相等，其相互之间有自己的换算关系，具体可网上寻找资料。
+
+### 图标样式
+
+现有的图标样式纷繁复杂，早就不局限于线性、面性了。C 端的图标是更加的百花齐放。在这里我们暂且基于基础样式进行分析。
+
+下面是我寻找到的 Untitled Icons 的图标样式：Line（线性）、Duocolor（线性多色）、Duotone（面性多色）、Solid（面性）。
+
+![各种图标样式示例](https://cdn.yikzero.com/markdown/images/202311122131581.png)
+
+以上四种图标样式，基本能够满足 B 端设计所有的需求了。
+
+如果按照更加细致的分法，Material Design 还将「线性图标」分成了：OutLine（轮廓）、Rounded（圆角）、Sharp（锐利）。
+
+![Material Design 图标风格](https://cdn.yikzero.com/markdown/images/202311122203904.png)
+
+再加上线性图标的描边（Stroke）粗细、圆角（Radius）大小，这基本就能够满足企业、产品性格的定制化需求了。
+
+另外，图标的风格不仅影响整体界面风格，还会影响图标的功能性和用户体验：
+
+- 复杂的图标就不适合过小的尺寸（16px * 16px 的图标需要更加简洁的线性样式）
+- 面性图标整体上会比线性图标更容易识别，但具体需根据图标形状判断 [结论来源](https://cdr.lib.unc.edu/concern/masters_papers/6w924g35w)
+
+## 图标设计
+
+首先我想说，我从来就没有完全独立的设计过一个图标。以往如果没有满足需求的图标，我基本也是拿个类似含义的图标，然后简单调整一下其形状。
+
+故，借着这个机会，我也可以接触一下图标的设计。Ant design 的[图标设计指引](https://ant.design/docs/spec/icon-cn)其实已经写了很多相关内容了，推荐先了解一下。
+
+### Keyline 的使用
+
+Keyline 是网格的基础。通过使用这些核心形状作为指导，我们可以在系统图标之间保持一致的视觉比​​例。
+
+下图是根据 [Material Design 3 Icon design template](https://m3.material.io/styles/icons/designing-icons#8754553f-29d9-4671-b163-123b8e7b8f1e) 的规范绘制的 Keyline 网格。基于该网格，基本能够绘制各式各样的图标了。
+
+![Keyline 示范](https://cdn.yikzero.com/markdown/images/202311131752115.png)
+
+![Keyline 基础形状大全](https://cdn.yikzero.com/markdown/images/202311131752144.png)
+
+在设计资源满天飞的现在，你完全可以在 [iconftont](https://www.iconfont.cn/) 上找到样式符合需求的图标。然后根据产品的风格，进行重绘即可，真正需要设计师来完全创造的就很少了。
+
+我也尝试应用 Keyline 绘制了几个基本的图标：主页、卡片、锁、文件，这也是 Keyline 上的四种基本形状。
+
+![图标设计尝试](https://cdn.yikzero.com/markdown/images/202311131902436.png)
+
+在自己上手实操过程中，我发现了几个图标设计小 Tips：
+
+- 尽量应用「基础形状」布尔运算来构成图标。
+- Keyline 提供的是数值上的平衡，但数值相等不等于视觉上的平衡（例如：播放图标）。
+- 在选择描边对齐（Stroke Alignment）方式时，图标设计中大多应用中心对齐（Center）或内侧对齐（Inside）。中心对齐的图标在相同情况下看起来会更大些。
+- 在 Figma 中，使用 `Shift + Backspace` 删除点和利用钢笔工具的中心点功能可以大幅提高图标设计的效率。
+- 图标设计完毕后，可应用 Flatten 来将图标线条整合在一起，方便统一处理。不需要将描边变成面，因为这不利于后期调整线段粗细。
+
+## 图标应用
+
+在图标设计完成后，接下来的步骤是考虑如何将这些图标有效地展示给观众。正如俗语所说，「丑媳妇最终也要见公婆」，这意味着无论设计结果如何，都需要有一个展示和反馈的过程。这不仅是为了展示成果，也是为了获取反馈、改进和优化设计。
+
+### 图片方式
+
+最传统的展示方式自然是图片。设计师将图标按照默认、悬停、按下、激活、禁用等状态分别切出 @1x @2x 的图标，打个压缩包，发给前端。亦或者设计师切图后上传蓝湖，前端自行在「蓝湖」下载自己所需要的图标。
+
+如果前端需要图片格式的图标时，我一般会通过 [TinyPNG](https://tinypng.com/) 压缩一下图标，在保证图标清晰度的情况下使得图标占用尽量小。我最常用工具是 [TinyPNG4Mac](https://github.com/kyleduo/TinyPNG4Mac)，比较方便。部分前端脚手架也自带了图片压缩功能，占用小于某个值的图片还会被转为 Base64 编码来存放。
+
+![Base 64之后的图片](data:image/png;base64,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)
+
+往更早的技术回溯，我们会遇到「雪碧图」，这是一种将多个图标整合到一张带有透明背景的图片中的做法。设计师把所有图标放在一张图上，然后前端通过每个图标的位置和尺寸来在网页上显示它们。这种方法的优点是减少了网页请求的次数。实际上，现在一些网站在制作动态图像时，也常采用类似「雪碧图」的方法，通过连续的静态帧来创建动画效果。
+
+JPG / PNG 格式的图片属于最保险的展示方式，所有浏览器都支持，虽然是一种位图格式，放大后不够清晰，但图片格式基本能够解决网站的大部分需求了，解决方案也足够成熟了。
+
+现有的 CDN 服务商和或一些框架，如 Next.js，能够智能识别浏览器是否支持 WEBP 或 AVIF 格式。这两种图片格式可以提供更高压缩率但是更高的清晰度。
+
+### 字体方式
+
+前面我们也说过了，图标需要设计师按照各种状态分别切图，然后再提供给开发。如果官网整体色彩调整，全部图标都需要重新切图的话，这或许就是一场浩劫。
+
+也或许因为其他原因一起，图标字体的方案出现了。国内最常用的字体图标平台也就是 iconfont。这需要设计师将图标轮廓化，然后上传至 iconfont 上。前端便可以根据图标名称引用图标，也可以方便的调整图标的色彩、大小。
+
+![iconfont 图标](https://cdn.yikzero.com/markdown/images/202311132044218.png)
+
+字体图标直到我写这篇文章的时候，应用的也还是挺广泛的，调用方便、占用较少。但主要有以下几个缺点影响着字体图标的使用：
+
+- 图标需要设计师一个个处理。部分图标轮廓化之后还不够，还需要通过 Figma [Fill Rule Editor](https://www.figma.com/community/plugin/771155994770327940/fill-rule-editor) 插件，将图标填充模式调整成「Non-zero rule」才能够正常展示在 iconfont 中。 具体方案可[参照](https://zhuanlan.zhihu.com/p/137298478)
+  - 如果通过 Fill Rule Editor 调整填充样式时，发生了图标消失事件，可以尝试将图标原封不动的复制到 illustrator / Sketch ，然后复制回来即可解决该问题。（误
+- 字体图标对于多色图标的支持程度不够，自定义程度不够高。
+- 字体图标还存在无法正常渲染的情况，还需要特殊处理（我曾天真以为是我浏览器的问题）。
+
+字体样式图标我只能从设计师的角度来评价，因为我没有在开发时应用过该方式。推荐文章 [Icon Fonts vs SVG Icons: What Works Best for You?](https://getdevdone.com/blog/icon-fonts-vs-svg-icons.html)，里面比较详细的对比了字体与 SVG 优缺点。
+
+### SVG 方式
+
+SVG 图标不仅继承了字体图标的主要优势，还解决了字体图标的一些局限性，其主要优点包括：
+
+- 支持每个图标拥有多种颜色，包括渐变。
+- 支持更加复杂的图形和形状，其不限于字体的基本形状。
+- 支持直接嵌入 HTML 代码中，方便编辑、控制图标。
+- 支持 CSS 和 JavaScript 动画
+
+iconfont 也不仅仅只支持字体图标的方式，官方几年前也已经支持通过 symbol 方式来引用 SVG 图标。
+
+我们可以通过一个例子来简单了解 SVG。以下是一个在 Figma 中导出的 SVG 格式的「主页」图标，其代码如下：
+
+```html
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M15 21V13C15 12.4477 14.5523 12 14 12H10C9.44772 12 9 12.4477 9 13V21M15 21H20C20.5523 21 21 20.5523 21 20V9.48908C21 9.18049 20.8575 8.88919 20.6139 8.69973L12.6139 2.47751C12.2528 2.19665 11.7472 2.19665 11.3861 2.47751L3.38606 8.69973C3.14247 8.88919 3 9.18049 3 9.48908V20C3 20.5523 3.44772 21 4 21H9M15 21H9" stroke="black" stroke-width="2"/>
+</svg>
+```
+
+这个 SVG 包含几个关键属性：
+
+- **path：** path 元素定义了图形的轮廓，通过一系列命令和参数描述路径上的点，形成图形。在这个例子中，这些命令和参数共同构成了一个房子的形状。
+- **fill：** fill 属性用于设置图形的内部颜色。它可以是16进制的颜色代码（例如 #FF0000），也可以是常见的颜色名称（例如 `black` ）。none 表示没有填充，而 currentColor 使用元素或其父元素的 color 属性值。
+- **stroke：** stroke 属性用于定义图形轮廓的颜色，使用方式与 fill 相似。
+- **stroke-width：** stroke-width 属性指定描边的宽度。
+
+如果 SVG 包含多个路径，会有多个 path 元素。每个 path 可以有独立的 fill 和 stroke 属性，控制各自的填充和描边样式。如果某个图形部分不需要描边，可以将其 stroke 属性设置为 none 。
+
+![Remix 平台 图标展示](https://cdn.yikzero.com/markdown/images/202311142114226.png)
+
+如上图所示，我们看到的是一个图标的预览和对应的代码。仔细观察，你会注意到代码中并未指定图标的宽度、高度、填充色和描边色。
+
+这种做法旨在提供尽可能简洁的 SVG 图标代码，仅包含图标路径等核心信息。这样设计的目的是允许前端开发者更灵活地控制图标的颜色和尺寸。例如，如果 SVG 图标代码中默认包含了 `fill` 属性，前端开发者在应用这些图标时可能会发现无法改变其颜色。为解决这一问题，一种方法是移除 `fill` 属性，或将 `fill` 设为 `currentColor` ，然后通过CSS来定义颜色。另一种方法是直接在 `fill` 属性中指定所需颜色。
+
+不建议使用诸如 filter 这样的 Hack 方法来调整颜色，因为这种方法可能既复杂又不精确。
+
+同样，SVG图标支持压缩，可以使用工具如 [SVGO](https://github.com/svg/svgo) 清理 SVG 代码中的冗余部分。
+
+对于前端调用SVG的实践，可以参考下面的示例，其中使用了 Tailwindcss 和 Lucide Icons ：
+
+**直接调用示例**
+
+这段代码示例展示了如何使用简单的类控制图标的尺寸、颜色以及暗黑模式下的显示效果。操作非常直观方便：
+
+```tsx
+<div className="Container">
+  <svg className="w-5 h-5 stroke-blue-500 hover:stroke-blue-600 dark:stroke-blue-400 dark:hover:stroke-blue-500" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M15 21V13C15 12.4477 14.5523 12 14 12H10C9.44772 12 9 12.4477 9 13V21M15 21H20C20.5523 21 21 20.5523 21 20V9.48908C21 9.18049 20.8575 8.88919 20.6139 8.69973L12.6139 2.47751C12.2528 2.19665 11.7472 2.19665 11.3861 2.47751L3.38606 8.69973C3.14247 8.88919 3 9.18049 3 9.48908V20C3 20.5523 3.44772 21 4 21H9M15 21H9"/>
+  </svg>
+</div>
+```
+
+**软件包应用示例**
+
+以下示例展示了如何通过软件包来应用图标，这种方式同样简单，只需引入所需图标并设置样式：
+
+```tsx
+import { Home } from "lucide-react";
+
+const App = () => {
+  return (
+    <Home className="w-5 h-5 stroke-blue-500 hover:stroke-blue-600 dark:stroke-blue-400 dark:hover:stroke-blue-500" />
+  );
+};
+
+export default App;
+```
+
+要将设计图标交付给开发团队，你可以选用 iconfont 或使用 [figma-icon-automation](https://github.com/leadream/figma-icon-automation) 插件打包图标为 npm 库，便于开发团队通过安装包调用。此方法配置一次即可，效率高。
+
+SVG 图标应用方式虽然涉及到代码，但是该部分介绍也还是为设计师准备的。目的只想告诉大家，SVG 不存在不好调整色彩的问题，也不存在不好调用的问题。积极推动开发跟进吧～
+
+## 结束语
+
+这个微小的图标背后隐藏着丰富而复杂的内容，而本文仅仅是对这一广阔主题的初步探索。作为一个初学者，我在文章中的错误在所难免，我诚挚地欢迎读者提出宝贵的意见和指正。
+
+## 参考内容
+
+- [Material Design 3](https://m3.material.io/)
+- [Icon Fonts vs SVG Icons: What Works Best for You?](https://getdevdone.com/blog/icon-fonts-vs-svg-icons.html)
+- [Design Icons from Scratch](https://blog.yarsalabs.com/guide-to-design-icons/)
+- [Intro to The 8-Point Grid System](https://medium.com/built-to-adapt/intro-to-the-8-point-grid-system-d2573cde8632#.5h95d066j)
+- [Apple - Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines)
+- [Ant Design 5](https://ant.design/index-cn/)
+- [Lucide Icons](https://lucide.dev/)
+- [Remix Icons](https://remixicon.com/)

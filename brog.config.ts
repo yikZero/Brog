@@ -13,6 +13,8 @@ const BrogConfig = {
   HOMEPAGE_POST_NUMBER: process.env.NEXT_PUBLIC_HOMEPAGE_POST_NUMBER || 3, // 在首页可显示的文章数量 The number of posts that can be displayed on the homepage
   HOMEPAGE_PROJECT_NUMBER: process.env.NEXT_PUBLIC_HOMEPAGE_PROJECT_NUMBER || 3, // 在首页可显示的项目数量 The number of projects that can be displayed on the homepage
 
+  
+  ARTICLE_EXPIRY_DAYS: process.env.NEXT_PUBLIC_ARTICLE_EXPIRY_DAYS || 60, // 文章过期天数 The number of days after which an article is considered outdated
   SINCE: 2023, // 如果留空，则使用当前年份 If left blank, use the current year
 
 };

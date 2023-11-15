@@ -1,4 +1,4 @@
-<h4 align="right"><a href="https://github.com/yikZero/Brog/blob/main/README.md">English</a> | <strong>简体中文</strong></h4>
+<h4 align="right"><a href="https://github.com/yikZero/Brog/blob/content-mdx/README.md">English</a> | <strong>简体中文</strong></h4>
 <h1 align="center">Brog</h1>
 
 <p align="center"><strong>由 Sanity 和 MDX 驱动的 Next.js 博客</strong></p>
@@ -6,7 +6,7 @@
 <div align="center">
     <a href="https://twitter.com/yikZero" target="_blank">
     <img alt="推特" src="https://img.shields.io/badge/关注-yikZero-蓝色?logo=Twitter"></a>
-    <a href="https://github.com/yikZero/Brog/blob/main/LICENSE" target="_blank">
+    <a href="https://github.com/yikZero/Brog/blob/content-mdx/LICENSE" target="_blank">
     <img alt="GitHub 许可" src="https://img.shields.io/github/license/yikZero/Brog"></a>
 </div>
 
@@ -22,7 +22,6 @@
 - 📡 可定制 RSS 订阅
 - 🌐 优化搜索引擎
 - 🗺️ 网站地图设置
-- 🔄 ISR 更新支持
 
 ## 技术栈
 
@@ -31,7 +30,7 @@
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Vercel](https://vercel.com/)
-- [Sanity](https://www.sanity.io/)
+- [MDX](https://mdxjs.com/)
 
 ## 部署
 

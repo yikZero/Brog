@@ -1,0 +1,117 @@
+---
+title: R4S 安装 Plex 服务端记录
+description: 记录安装 Plex 时碰到的问题
+categories: [R4S, Plex]
+publishedAt: 2023-03-18
+---
+
+## 配置环境
+
+- 型号：FriendlyElec NanoPi R4S
+- 固件版本：OpenWrt R22.3.13 (2022-06-22)
+- 架构：ARMv8 Processor x 6
+- 环境：Google Direct
+
+## 前期准备
+
+1. 自行配备访问谷歌的网络
+1. 安装好带 docker 的 openwrt 系统
+1. 内存卡给 docker 扩容
+
+## 踩坑记录
+
+### 架构问题
+
+现有大部分教导 docker 搭建 plex 的都是基于 X86 架构的，如果你根据 [plexinc/pms-docker](https://hub.docker.com/r/plexinc/pms-docker/) 的 docker 镜像搭建的话，会在 docker 容器日志中报错：`stderr: exec /init: exec format error`
+
+这就是因为你安装的也是跟你系统架构不相同的 docker 容器。
+
+所以寻找到 [linuxserver/plex](https://hub.docker.com/r/linuxserver/plex) 的 ARM 架构的 PLEX 开始安装：
+
+```shell
+docker run \
+-d \
+--name plex \
+-p 32400:32400/tcp \
+-p 3005:3005/tcp \
+-p 8324:8324/tcp \
+-p 32469:32469/tcp \
+-p 1901:1900/udp \
+-p 32410:32410/udp \
+-p 32412:32412/udp \
+-p 32413:32413/udp \
+-p 32414:32414/udp \
+-e TZ=Asia/Shanghai \
+-e PLEX_CLAIM=claim-xfczZtmEH5QPvZQc1HsF \
+-e ADVERTISE_IP="http://192.168.31.1:32400/" \
+-h Zero-R4s \
+-v /myplex/plex/database:/config \
+-v /myplex/transcode/temp:/transcode \
+-v /mnt/sda/Media:/data \
+--restart unless-stopped \
+lscr.io/linuxserver/plex:latest
+```
+
+具体操作教程在 [linuxserver/plex](https://hub.docker.com/r/linuxserver/plex) 也可以找到，根据自己的情况进行调整即可。
+
+## PLEX 服务器登陆无初始化页面
+
+这句话的意思是，在初次进入 Plex 应用界面时，可能会由于未开启远程访问而出现“找不到服务器”的问题，此时可以使用以下两种方法来解决：
+
+**一、SSH 转发端口**
+
+需要在本地计算机上打开 PowerShell 工具，然后运行上述命令，将远程服务器的 Plex 端口（默认为 32400）转发到本地计算机的端口（例如 8888）。转发端口成功后，可以在本地计算机的浏览器中访问 `localhost:8888/web` 来打开 Plex 应用界面。
+
+**二、直接连接**
+
+如果远程服务器已经允许了远程访问，可以尝试在浏览器中直接访问远程服务器的 IP 地址和 Plex 端口（例如 http://13.124.4.66:32400/web）来打开 Plex 应用界面。
+
+### 解决方法
+
+在 macOS 上，可以使用 iTerm 应用程序来设置 SSH 转发端口，具体步骤如下：
+
+**一、连接远程服务器**
+
+输入以下命令来连接远程服务器，其中 username 是远程服务器上的用户名，remote_server_ip 是远程服务器的 IP 地址：
+
+`ssh -L 8888:localhost:32400 username@remote_server_ip`
+
+这将会在本地计算机的 8888 端口将远程服务器上 Plex 的 32400 端口转发到本地计算机上。
+
+**二、输入远程服务器上的密码并验证**
+
+现在，可以打开本地计算机上的浏览器，然后输入`http://localhost:8888/web` 来访问远程服务器上的 Plex 界面。
+
+### 再次报错
+
+```shell
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ED25519 key sent by the remote host is
+SHA256:OC9qmnB9nQtFN/OiPH7jGEoKb/zbX4NghGv/glu5dwQ.
+Please contact your system administrator.
+Add correct host key in /Users/yikzero/.ssh/known_hosts to get rid of this message.
+Offending ED25519 key in /Users/yikzero/.ssh/known_hosts:1
+Host key for 192.168.31.1 has changed and you have requested strict checking.
+Host key verification failed.
+```
+
+这个错误提示表明之前连接的远程服务器的密钥发生了变化，可能是服务器进行了系统更新或者管理员更改了服务器的密钥。为了保护信息安全，SSH 客户端会检查远程服务器的密钥并进行验证，如果密钥发生变化，就会出现这个错误提示。
+
+更新本地计算机的远程服务器密钥数据以解决问题。操作步骤如下：
+
+1. **删除旧密钥：**
+   执行 `ssh-keygen -R <remote_server_ip>` 删除本地计算机上的旧密钥数据。
+
+2. **连接远程服务器：**
+   使用 `ssh username@remote_server_ip` 连接。
+
+   - 系统会提示“Are you sure you want to continue connecting (yes/no)?”。输入 yes 并回车。
+   - 输入远程服务器密码以验证。
+   - 连接后，重新运行命令以设置 SSH 转发端口。
+
+完成后即可访问 PLEX 服务端。

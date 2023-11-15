@@ -37,3 +37,8 @@ next-env.d.ts
 
 # vscode
 .vscode
+
+# contentlayer
+.contentlayer
+
+.DS_Store
