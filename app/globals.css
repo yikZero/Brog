@@ -11,10 +11,7 @@
 }
 
 @layer components {
-  ::selection {
-    @apply bg-blue-600 text-white;
-  }
-  ::-moz-selection {
+  ::selection, ::-moz-selection {
     @apply bg-blue-600 text-white;
   }
 }
@@ -35,8 +32,24 @@
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-gray-500 dark:bg-gray-500;
   }
-  
+
   :not(pre) > code {
     @apply text-sm inline-block text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded py-0.5 px-1 m-0;
+  }
+
+  .toc-link {
+    @apply block py-1 px-2 no-underline text-sm font-normal text-gray-500 dark:text-gray-400 hover:text-blue-600 transition duration-100;
+  }
+  
+  .toc-active-link{
+    @apply text-blue-600;
+  }
+  
+  .toc-list{
+    @apply list-none;
+  }
+  
+  .toc-list-item .toc-list{
+    @apply pl-3;
   }
 }
